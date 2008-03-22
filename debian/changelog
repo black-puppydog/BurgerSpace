@@ -1,0 +1,170 @@
+burgerspace (1.8.2-4) unstable; urgency=low
+
+  * Remove the high score patch since it breaks burgerspace in certain cases
+    (closes: #469423)
+
+ -- Francois Marier <francois@debian.org>  Sat, 22 Mar 2008 23:19:25 +1300
+
+burgerspace (1.8.2-3) unstable; urgency=low
+
+  * debian/rules: add call to dh_desktop
+  * debian/control: change the priority to extra because it needs to
+    depend on flatzebra which is also of priority extra
+
+ -- Francois Marier <francois@debian.org>  Mon, 10 Mar 2008 22:09:10 +1300
+
+burgerspace (1.8.2-2) unstable; urgency=low
+
+  * Fix gcc 4.3 compile error (closes: #461962)
+  * Bump debhelper compatibility to 6
+
+ -- Francois Marier <francois@debian.org>  Mon, 04 Feb 2008 16:22:29 +1300
+
+burgerspace (1.8.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Update the usr/share/doc/ delete rule to pick up all versions
+
+ -- Francois Marier <francois@debian.org>  Sun, 23 Dec 2007 00:40:03 -0500
+
+burgerspace (1.8.1-5) unstable; urgency=medium
+
+  * Rebuild now that libflatzebra is in testing (closes: #450470)
+  * Remove X-RedHat-Base from the .desktop file (fix lintian warning)
+  * Bump Standards-Version to 3.7.3 (no changes)
+
+ -- Francois Marier <francois@debian.org>  Thu, 06 Dec 2007 12:48:34 +1300
+
+burgerspace (1.8.1-4) unstable; urgency=medium
+
+  * Add all of the SDL libs from flatzebra to the build-depends (closes: #452534)
+
+ -- Francois Marier <francois@debian.org>  Sat, 24 Nov 2007 21:50:17 +1300
+
+burgerspace (1.8.1-3) unstable; urgency=low
+
+  * Add pkg-config to build-depends
+
+ -- Francois Marier <francois@debian.org>  Wed, 21 Nov 2007 08:54:25 +1300
+
+burgerspace (1.8.1-2) unstable; urgency=low
+
+  * Rename XS-Vcs-* fields to Vcs-*
+
+ -- Francois Marier <francois@debian.org>  Tue, 20 Nov 2007 15:21:12 +1300
+
+burgerspace (1.8.1-1) unstable; urgency=low
+
+  * New maintainer. Thanks Daniel for your work!
+  * New upstream release (closes: #430902)
+    - sound effects
+    - new --z-for-pepper command-line option
+    - ingredients fall faster
+    - turning corners automatically
+  * Apply "corner turning tolerance" patch (closes: #250382). Thanks to Tomas Pospisek!
+  * Apply "highscores" patch (closes: #246528). Thanks to Tomas Pospisek!
+  * Sync with Ubuntu: apply patch for the .desktop file
+  * Remove the "Application" category from the .desktop file (lintian warning)
+
+  * debian/rules:
+    - Use autotools-dev magic in the configure script
+    - Copy system's config.guess and config.sub
+    - Use debian/compat for debhelper compatibility
+    - Fix the make distclean lintian warning
+    - Replace dh_installmanpages with dh_installman
+    - Change the upstream changelog to be NEWS
+    - Move directory creation to debian/dirs
+    - Delete the /usr/share/doc/burgerspace-0.8.1 directory
+  * debian/control:
+    - Bump Standards-Version to 3.7.2
+    - Bump debhelper dependency to 5
+    - Mention collab-maint repo
+    - Add homepage field
+    - Add autotools-dev and automake1.7 to the build dependencies
+    - Depend on libflatzebra instead of libgengameng
+  * debian/copyright:
+    - Update download link
+    - Update Author's email address
+    - Clean-up and expand the copyright section
+  * debian/docs: Remove TODO
+  * debian/menu: Set menu section to Games/Action (menu transition)
+  * debian/watch: Add a watch file
+
+ -- Francois Marier <francois@debian.org>  Fri, 02 Nov 2007 22:25:55 +1300
+
+burgerspace (1.6.1-2) unstable; urgency=low
+
+  * C++ transition rebuild. (Closes: #324369)
+
+  * Update config.guess, config.sub.  (Closes: #319924, #115491)
+
+  * Add a menu icon (Closes: #273434)
+
+  * debhelper compatibility level 4
+
+ -- Daniel Burrows <dburrows@debian.org>  Thu, 28 Jul 2005 09:45:03 -0700
+
+burgerspace (1.6.1-1) unstable; urgency=low
+
+  * New upstream release.  No interesting changes, but this builds with
+    libgengameng version 4.1.
+  * Build against g++-3.2.  I'm cheating here: technically I should wait
+    for gengameng to be rebuilt on all archs with g++-3.2.  However, since
+    this release needs the new version of gengameng, and the new version
+    of gengameng demands g++-3.2, I can just upload now.
+  * Make lintian shut up about standards version.
+
+ -- Daniel Burrows <dburrows@debian.org>  Thu,  9 Jan 2003 09:21:12 -0500
+
+burgerspace (1.5-3) unstable; urgency=low
+
+  * Burgerspace needs libgengameng-dev >=3.0!  Build-depends adjusted
+  accordingly.  (I think this Closes: #96509)
+
+ -- Daniel Burrows <dburrows@debian.org>  Sun,  6 May 2001 13:47:39 -0400
+
+burgerspace (1.5-2) unstable; urgency=low
+
+  * Remove build-depends on g++ and libstdc++-dev.
+
+ -- Daniel Burrows <dburrows@debian.org>  Tue,  1 May 2001 08:42:52 -0400
+
+burgerspace (1.5-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Daniel Burrows <dburrows@debian.org>  Sat, 28 Apr 2001 19:38:23 -0400
+
+burgerspace (1.4-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Daniel Burrows <dburrows@debian.org>  Sun,  1 Apr 2001 18:52:16 -0400
+
+burgerspace (1.3-1) unstable; urgency=low
+
+  * New upstream version.
+    - keyboard problems resolved.  Closes: #90005, #90185
+
+ -- Daniel Burrows <dburrows@debian.org>  Fri, 23 Mar 2001 22:13:34 -0500
+
+burgerspace (1.2-2) unstable; urgency=low
+
+  * Really don't install the upstream changelog, since it's empty.
+  (closes: #90116)
+
+ -- Daniel Burrows <dburrows@debian.org>  Tue, 20 Mar 2001 20:10:11 -0500
+
+burgerspace (1.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Has correct build-depends now.  (oops, I hope this closes: #89895)
+  * Don't use dh_testversion, it's deprecated.
+
+ -- Daniel Burrows <dburrows@debian.org>  Fri, 16 Mar 2001 18:19:33 -0500
+
+burgerspace (1.1-1) unstable; urgency=low
+
+  * Initial Release.  (closes: #89157)
+
+ -- Daniel Burrows <dburrows@debian.org>  Sat, 10 Mar 2001 08:43:30 -0500

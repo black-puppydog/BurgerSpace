@@ -29,6 +29,7 @@
 #include <assert.h>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 #include <sys/types.h>
 #include <sys/stat.h>

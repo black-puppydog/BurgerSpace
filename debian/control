@@ -1,0 +1,19 @@
+Source: burgerspace
+Section: games
+Priority: extra
+Maintainer: Francois Marier <francois@debian.org>
+Build-Depends: debhelper (>= 6), libflatzebra-dev, autotools-dev, automake1.7, pkg-config, libsdl1.2-dev, libsdl-image1.2-dev, libsdl-mixer1.2-dev
+Standards-Version: 3.7.3
+Homepage: http://sarrazip.com/dev/burgerspace.html
+Vcs-Svn: svn://svn.debian.org/svn/collab-maint/deb-maint/burgerspace/
+Vcs-Browser: http://svn.debian.org/wsvn/collab-maint/deb-maint/burgerspace/
+
+Package: burgerspace
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Avoid evil foodstuffs and make burgers
+ This is a clone of the classic game "BurgerTime".  In it, you play the
+ part of a chef who must create burgers by stepping repeatedly on the
+ ingredients until they fall into place.  And to make things more
+ complicated, you also must avoid evil animate food items while performing
+ this task, with nothing but your trusty pepper shaker to protect you.
