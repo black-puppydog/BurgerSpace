@@ -1,3 +1,10 @@
+burgerspace (1.8.2-5) UNRELEASED; urgency=low
+
+  * Change maintainer to be the Games Team
+  * Move to git and update Vcs fields
+
+ -- Francois Marier <francois@debian.org>  Tue, 11 Nov 2008 12:31:11 +1300
+
 burgerspace (1.8.2-4) unstable; urgency=low
 
   * Remove the high score patch since it breaks burgerspace in certain cases
