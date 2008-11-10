@@ -1,0 +1,19 @@
+BurgerSpace - A BurgerTime(TM) clone.
+
+Copyright (C) 2001-2007 Pierre Sarrazin <http://sarrazip.com/>
+This program is free software distributed under the GNU GPL.
+See the file COPYING.
+
+INSTALLATION
+
+    The program requires my `flatzebra' library and the Simple
+    DirectMedia Layer multimedia library, version 1.2.0 or later
+    (see http://www.libsdl.org/).  Links to both are offered on the
+    BurgerSpace Home Page at
+
+        http://sarrazip.com/dev/burgerspace.html
+
+    See INSTALL for generic installation instructions.
+
+    This package installs a manual page: burgerspace(6).
+

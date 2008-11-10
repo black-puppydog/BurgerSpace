@@ -1,0 +1,115 @@
+.\" $Id: burgerspace.6,v 1.8 2007/12/22 23:03:35 sarrazip Exp $
+.\" Burgerspace manual page
+.\"
+.\" burgerspace - A hamburger-smashing video game.
+.\" Copyright (C) 2001-2007 Pierre Sarrazin <http://sarrazip.com/>
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License
+.\" as published by the Free Software Foundation; either version 2
+.\" of the License, or (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+.\" 02110-1301, USA.
+.\"
+.\"
+.TH BURGERSPACE "6" "December 22nd, 2007" "" ""
+.SH NAME
+burgerspace \- a BurgerTime(TM) clone
+.SH SYNOPSIS
+.B burgerspace
+.SH DESCRIPTION
+.PP
+\fBburgerspace\fR
+is a game where you are a chef and you must walk over hamburger
+ingredients (buns, meat, lettuce, tomatoes, cheese) to make them fall
+from floor to floor, until they end up in the plates at the bottom of
+the screen.
+Use the 
+\fBarrow keys\fR
+to move the chef.
+.PP
+However, you must do this while avoiding terrible enemies,
+such as eggs, sausages and pickles.  You will die if
+they touch you, but you can spray pepper on them with the
+\fBControl key\fR
+to paralyze them temporarily.
+.PP
+Use those pepper shots sparingly however, because you only
+have a limited number of them.  Pick up the treat that appears
+from time to time to obtain a new pepper shot.
+.PP
+Use the
+\fBP key\fR
+to pause the game, and to resume it afterwards.
+Use the
+\fBEscape key\fR
+to quit the program.
+.PP
+.SH OPTIONS
+.PP
+.TP
+\fB\-\-help\fR
+display a help page and exit
+.TP
+\fB\-\-version\fR
+display version information and exit
+.TP
+\fB\-\-initial\-level=N\fR
+start game at level N.  Default is 1.  N must be at least 1.
+.TP
+\fB\-\-ms\-per\-frame=N\fR
+N milliseconds per animation frame.  Default is 55.
+Minimum is 1.  Maximum is 1000.  50 means 20 frames per second.
+.TP
+\fB\-\-no\-sound\fR
+Disable the sound effects, which are enabled by default.
+.TP
+\fB\-\-full\-screen\fR
+Attempt to use the full screen mode.  The default is to display the
+game in an ordinary window.
+.TP
+\fB\-\-old\-motion\fR
+Use the old player motion system.  The new system is used by default.
+In the new motion system, when the requested direction is impossible,
+the last moving direction is attempted.
+This can be useful to turn corners automatically.
+In the old system, when the requested direction is impossible,
+the player does not move.
+.TP
+\fB\-\-z\-for\-pepper\fR
+Use the Z key instead of the Control key to shoot pepper.
+.SH LICENSE
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License.  This program has absolutely no warranty.
+.SH AUTHORS
+Pierre Sarrazin (code)
+.br
+Luce St-Amand (most images)
+.SH FILES
+This program uses the
+\fBflatzebra\fR library, by the same author.
+This library is itself based on the SDL graphics library
+(see http://www.libsdl.org).
+.PP
+See the BurgerSpace Home Page:
+.br
+http://sarrazip.com/dev/burgerspace.html
+.SH BUGS
+The sound effects may be annoying.
+.PP
+High scores are not remembered.
+.PP
+No attempt was made to emulate the exact behavior of the
+enemies in the original game.
+.PP
+The meat looks rather unsavory, not to mention what it
+really looks like.  This is one image that was not drawn
+by Luce...
