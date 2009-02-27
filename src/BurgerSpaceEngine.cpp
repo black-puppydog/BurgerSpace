@@ -1,8 +1,8 @@
-/*  $Id: BurgerSpaceEngine.cpp,v 1.32 2007/12/22 23:03:35 sarrazip Exp $
+/*  $Id: BurgerSpaceEngine.cpp,v 1.37 2009/02/27 02:50:42 sarrazip Exp $
     BurgerSpaceEngine.cpp - Main engine
 
     burgerspace - A hamburger-smashing video game.
-    Copyright (C) 2001-2007 Pierre Sarrazin <http://sarrazip.com/>
+    Copyright (C) 2001-2009 Pierre Sarrazin <http://sarrazip.com/>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -934,6 +934,7 @@ BurgerSpaceEngine::BurgerSpaceEngine(const string &windowManagerCaption,
 
     theCurrentLevel(),
 
+    inQuitDialog(false),
     inSaveDialog(false),
     inLoadDialog(false),
 
@@ -1162,8 +1163,11 @@ BurgerSpaceEngine::processKey(SDLKey keysym, bool pressed)
 bool
 BurgerSpaceEngine::tick()
 {
-    if (quitKS.isPressed())
-	return false;
+    if (quitKS.justPressed())
+    {
+	drawQuitDialog();
+	inQuitDialog = true;
+    }
 
     if (saveGameKS.justPressed())
     {
@@ -1177,7 +1181,12 @@ BurgerSpaceEngine::tick()
 	inLoadDialog = true;
     }
 
-    if (inSaveDialog)
+    if (inQuitDialog)
+    {
+	if (!doQuitDialog())
+	    return false;
+    }
+    else if (inSaveDialog)
     {
 	doSaveDialog();
     }
@@ -3072,6 +3081,31 @@ BurgerSpaceEngine::playSoundEffect(SoundMixer::Chunk &chunk)
 }
 
 
+void
+BurgerSpaceEngine::drawQuitDialog()
+{
+    paused = true;
+    if (numLives > 0)
+	displayPauseMessage(true);
+    showDialogBox("QUIT GAME: are you sure? (Y=yes, N=no) ");
+}
+
+
+bool
+BurgerSpaceEngine::doQuitDialog()
+{
+    if (lastKeyPressed == SDLK_y)
+	return false;
+    if (lastKeyPressed == SDLK_n)
+    {
+	lastKeyPressed = SDLK_UNKNOWN;
+	showDialogBox("Game NOT quit. Press P to resume.");
+	inQuitDialog = false;
+    }
+    return true;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // SAVING AND LOADING GAMES
@@ -3167,7 +3201,7 @@ BurgerSpaceEngine::doSaveDialog()
     if (slotNum == -2)
     {
 	lastKeyPressed = SDLK_UNKNOWN;
-	showDialogBox("Game NOT saved.");
+	showDialogBox("Game NOT saved. Press P to resume.");
 	inSaveDialog = false;
 	return;
     }

@@ -1,8 +1,8 @@
-/*  $Id: EnemySprite.cpp,v 1.6 2007/12/22 23:03:35 sarrazip Exp $
+/*  $Id: EnemySprite.cpp,v 1.7 2009/02/27 02:50:42 sarrazip Exp $
     EnemySprite.cpp - Sprite that represents an enemy of the player.
 
     burgerspace - A hamburger-smashing video game.
-    Copyright (C) 2001-2007 Pierre Sarrazin <http://sarrazip.com/>
+    Copyright (C) 2001-2009 Pierre Sarrazin <http://sarrazip.com/>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License

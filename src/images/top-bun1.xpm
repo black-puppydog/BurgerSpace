@@ -1,5 +1,5 @@
 /* XPM */
-static char * top_bun1_xpm[] = {
+static const char * top_bun1_xpm[] = {
 "24 16 21 1",
 " 	c None",
 ".	c #FFDD59",

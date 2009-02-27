@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.17 2005/05/21 03:50:24 sarrazip Exp $
+# $Id: Makefile.am,v 1.20 2007/12/25 07:06:25 sarrazip Exp $
 
 bin_PROGRAMS = burgerspace
 

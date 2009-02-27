@@ -1,5 +1,5 @@
 /* XPM */
-static char * redstuff_xpm[] = {
+static const char * redstuff_xpm[] = {
 "96 16 6 1",
 " 	c None",
 ".	c #DB0404",
