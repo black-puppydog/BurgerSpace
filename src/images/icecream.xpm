@@ -1,5 +1,5 @@
 /* XPM */
-static char * icecream_xpm[] = {
+static const char * icecream_xpm[] = {
 "30 30 6 1",
 " 	c None",
 ".	c #66DB59",

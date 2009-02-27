@@ -1,5 +1,5 @@
 /* XPM */
-static char * pickle_back0_xpm[] = {
+static const char * pickle_back0_xpm[] = {
 "30 30 5 1",
 " 	c None",
 ".	c #6ABA00",

@@ -1,5 +1,5 @@
 /* XPM */
-static char * chef_dead2_xpm[] = {
+static const char * chef_dead2_xpm[] = {
 "30 30 6 1",
 " 	c None",
 ".	c #E2AA76",

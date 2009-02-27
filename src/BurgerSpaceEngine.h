@@ -1,8 +1,8 @@
-/*  $Id: BurgerSpaceEngine.h,v 1.26 2007/12/22 23:03:35 sarrazip Exp $
+/*  $Id: BurgerSpaceEngine.h,v 1.31 2009/02/27 02:50:42 sarrazip Exp $
     BurgerSpaceEngine.h - Main engine
 
     burgerspace - A hamburger-smashing video game.
-    Copyright (C) 2001-2007 Pierre Sarrazin <http://sarrazip.com/>
+    Copyright (C) 2001-2009 Pierre Sarrazin <http://sarrazip.com/>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -42,7 +42,7 @@ class BurgerSpaceEngine : public flatzebra::GameEngine
 {
 public:
 
-    typedef char **XPM;
+    typedef const char **XPM;
 
     BurgerSpaceEngine(const std::string &windowManagerCaption,
 			int initLevelNumber,
@@ -267,6 +267,7 @@ private:
 
     Level theCurrentLevel;
 
+    bool inQuitDialog;
     bool inSaveDialog;
     bool inLoadDialog;
 
@@ -361,6 +362,9 @@ private:
     void displayStartMessage(bool display);
     void displayMessage(int row, const char *msg);
     void playSoundEffect(flatzebra::SoundMixer::Chunk &wb);
+
+    void drawQuitDialog();
+    bool doQuitDialog();
 
     void drawSaveDialog();
     void drawLoadDialog();

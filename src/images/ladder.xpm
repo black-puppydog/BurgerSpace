@@ -1,5 +1,5 @@
 /* XPM */
-static char * ladder_xpm[] = {
+static const char * ladder_xpm[] = {
 "32 32 3 1",
 " 	c None",
 ".	c #000000",

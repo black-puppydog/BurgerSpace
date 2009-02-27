@@ -1,5 +1,5 @@
 /* XPM */
-static char * hotdog_peppered0_xpm[] = {
+static const char * hotdog_peppered0_xpm[] = {
 "30 30 5 1",
 " 	c None",
 ".	c #A86921",

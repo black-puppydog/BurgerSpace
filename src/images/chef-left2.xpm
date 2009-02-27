@@ -1,5 +1,5 @@
 /* XPM */
-static char * chef_left2_xpm[] = {
+static const char * chef_left2_xpm[] = {
 "30 30 6 1",
 " 	c None",
 ".	c #FFFFFF",

@@ -7,7 +7,7 @@
 # Source archive's extension can be specified with rpm --define 'srcext .foo'
 # where .foo is the source archive's actual extension.
 # To compile an RPM from a .bz2 source archive, give the command
-#   rpmbuild -ta --define 'srcext .bz2' burgerspace-1.8.2.tar.bz2
+#   rpmbuild -ta --define 'srcext .bz2' burgerspace-1.8.3.tar.bz2
 #
 %if %{?rel:0}%{!?rel:1}
 %define rel 1
@@ -18,7 +18,7 @@
 
 Summary: A Burgertime(TM) clone
 Name: burgerspace
-Version: 1.8.2
+Version: 1.8.3
 Release: %{rel}
 License: GPL
 Group: Amusements/Games
@@ -26,8 +26,8 @@ Source: %{name}-%{version}.tar%{srcext}
 URL: http://sarrazip.com/dev/%{name}.html
 Prefix: /usr
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires:	flatzebra	>= 0.1.0
-BuildRequires:	flatzebra-devel	>= 0.1.0
+Requires:	flatzebra	>= 0.1.2
+BuildRequires:	flatzebra-devel	>= 0.1.2
 
 %description
 BurgerSpace is a game in which you are a chef, and must walk over

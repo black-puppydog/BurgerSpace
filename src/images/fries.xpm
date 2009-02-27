@@ -1,5 +1,5 @@
 /* XPM */
-static char * fries_xpm[] = {
+static const char * fries_xpm[] = {
 "30 30 6 1",
 " 	c None",
 ".	c #FFBA00",
