@@ -48,7 +48,7 @@ clean:
 install: build
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 
 	$(MAKE) DESTDIR=$(CURDIR)/debian/burgerspace install
@@ -70,7 +70,6 @@ binary-arch: build install
 	dh_installcron
 	dh_installman
 	dh_installchangelogs NEWS
-	dh_desktop
 	dh_link
 	dh_strip
 	dh_compress
