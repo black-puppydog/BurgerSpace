@@ -2,8 +2,9 @@ burgerspace (1.8.3-2) unstable; urgency=low
 
   * Bump Standards-Version up to 3.8.3
   * Bump debhelper compatibility to 7
+  * debian/copyright: remove reference to symlink version of GPL
 
- -- Francois Marier <francois@debian.org>  Sat, 07 Nov 2009 17:17:07 +1300
+ -- Francois Marier <francois@debian.org>  Sat, 07 Nov 2009 17:21:07 +1300
 
 burgerspace (1.8.3-1) unstable; urgency=low
 
