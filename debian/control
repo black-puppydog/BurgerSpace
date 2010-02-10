@@ -11,7 +11,7 @@ Vcs-Browser: http://git.debian.org/?p=pkg-games/burgerspace.git
 
 Package: burgerspace
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Avoid evil foodstuffs and make burgers
  This is a clone of the classic game "BurgerTime".  In it, you play the
  part of a chef who must create burgers by stepping repeatedly on the
