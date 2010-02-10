@@ -1,8 +1,9 @@
 burgerspace (1.8.3-3) unstable; urgency=low
 
   * Bump Standards-Version to 3.8.4
+  * Switch to 3.0 (quilt) source format
 
- -- Francois Marier <francois@debian.org>  Thu, 11 Feb 2010 09:04:27 +1300
+ -- Francois Marier <francois@debian.org>  Thu, 11 Feb 2010 09:04:57 +1300
 
 burgerspace (1.8.3-2) unstable; urgency=low
 
