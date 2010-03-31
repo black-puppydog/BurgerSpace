@@ -1,10 +1,10 @@
-# $Id: configure.ac,v 1.12 2009/02/27 02:50:42 sarrazip Exp $
+# $Id: configure.ac,v 1.14 2010/03/31 02:05:48 sarrazip Exp $
 
 AC_PREREQ(2.50)
 AC_INIT(src/BurgerSpaceEngine.h)
 AC_CANONICAL_HOST
 AC_CANONICAL_SYSTEM
-AM_INIT_AUTOMAKE(burgerspace, 1.8.3)
+AM_INIT_AUTOMAKE(burgerspace, 1.8.4)
 
 
 # Checks for programs.
@@ -16,7 +16,7 @@ AC_LANG_CPLUSPLUS
 
 # Checks for libraries.
 
-MINVER_FLATZEBRA=0.1.2;		AC_SUBST(MINVER_FLATZEBRA)
+MINVER_FLATZEBRA=0.1.4;		AC_SUBST(MINVER_FLATZEBRA)
 PKG_CHECK_MODULES(FLATZEBRA, flatzebra-0.1 >= $MINVER_FLATZEBRA)
 
 

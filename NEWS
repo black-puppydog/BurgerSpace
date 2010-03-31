@@ -1,4 +1,9 @@
-2009-02-26: BurgerSpace 1.8.3 to be released.
+2010-03-30: BurgerSpace 1.8.4 released.
+
+    Game now pauses automatically when window loses focus.
+    Fixed compilation warnings.
+
+2009-02-26: BurgerSpace 1.8.3 released.
 
     Pressing Escape key to quit now brings up a confirmation dialog.
 
