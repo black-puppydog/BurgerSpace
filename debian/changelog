@@ -1,3 +1,10 @@
+burgerspace (1.8.4-1) unstable; urgency=low
+
+  * New upstream release:
+    - automatically pause the game when the window loses focus
+
+ -- Francois Marier <francois@debian.org>  Thu, 01 Apr 2010 08:07:57 +1300
+
 burgerspace (1.8.3-3) unstable; urgency=low
 
   * Bump Standards-Version to 3.8.4
