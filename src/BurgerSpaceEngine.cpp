@@ -1,4 +1,4 @@
-/*  $Id: BurgerSpaceEngine.cpp,v 1.37 2009/02/27 02:50:42 sarrazip Exp $
+/*  $Id: BurgerSpaceEngine.cpp,v 1.40 2010/03/21 15:58:30 sarrazip Exp $
     BurgerSpaceEngine.cpp - Main engine
 
     burgerspace - A hamburger-smashing video game.
@@ -871,9 +871,10 @@ BurgerSpaceEngine::BurgerSpaceEngine(const string &windowManagerCaption,
 					bool _useSound,
 					bool fullScreen,
 					bool useOldMotionMode,
+					bool processActiveEvent,
 					SDLKey pepperKey)
 						throw(int, string)
-  : GameEngine(Couple(672, 520), windowManagerCaption, fullScreen),
+  : GameEngine(Couple(672, 520), windowManagerCaption, fullScreen, processActiveEvent),
   		// may throw string exception
 
     initLevelNo(1),
@@ -1160,6 +1161,22 @@ BurgerSpaceEngine::processKey(SDLKey keysym, bool pressed)
 
 
 /*virtual*/
+void
+BurgerSpaceEngine::processActivation(bool appActive)
+{
+    // If the app is now inactive, put the game in paused mode.
+    // If the app is now active, stay in paused mode so the user sees
+    // the resume prompt and can choose when to resume playing.
+    //
+    if (!appActive)
+    {
+	paused = true;
+	displayPauseMessage(true);
+    }
+}
+
+
+/*virtual*/
 bool
 BurgerSpaceEngine::tick()
 {
@@ -1196,6 +1213,7 @@ BurgerSpaceEngine::tick()
     }
     else if (paused)
     {
+	displayPauseMessage(true);
 	if (pauseKS.justPressed())
 	    paused = false;
     }
@@ -1327,7 +1345,7 @@ BurgerSpaceEngine::chooseDirectionAmongMany(bool directions[4]) const
     The choice is random.
 */
 {
-    unsigned char key =
+    int key =
 	    ( (directions[RIGHT] << RIGHT)
 	    | (directions[UP]    << UP)
 	    | (directions[LEFT]  << LEFT)
@@ -1336,7 +1354,7 @@ BurgerSpaceEngine::chooseDirectionAmongMany(bool directions[4]) const
     if (key == 0)
 	return;
     unsigned char num = directionTable[key].num;
-    unsigned char index = rand() % num;
+    unsigned index = unsigned(rand()) % num;
     unsigned char choice = directionTable[key].alts[index];
 
     directions[RIGHT] = ((choice & (1 << RIGHT)) != 0);
@@ -3023,9 +3041,6 @@ BurgerSpaceEngine::initTimeForTreat()
 
 void
 BurgerSpaceEngine::displayPauseMessage(bool display)
-/*  Displays the pause message if 'display' is true, or erases the
-    corresponding region if 'display' is false.
-*/
 {
     if (display)
 	displayMessage(5, "PAUSED -- press P to resume");
@@ -3188,7 +3203,7 @@ BurgerSpaceEngine::doSaveDialog()
 	    }
 	    else
 	    {
-		saveGame(out, slotNum);
+		saveGame(out);
 		snprintf(temp, sizeof(temp),
 			"Game saved in slot %d. Press P to resume.", slotNum);
 	    }
@@ -3237,7 +3252,7 @@ BurgerSpaceEngine::doLoadDialog()
 	    }
 	    else
 	    {
-		int errorCode = loadGame(in, slotNum);
+		int errorCode = loadGame(in);
 		if (errorCode != 0)
 		    snprintf(temp, sizeof(temp), "Load error: %d\n", errorCode);
 		else
@@ -3350,7 +3365,7 @@ BurgerSpaceEngine::serialize(const Sprite &s) const
 			    speed.x, speed.y,
 			    collBoxPos.x, collBoxPos.y,
 			    collBoxSize.x, collBoxSize.y,
-			    s.currentPixmapIndex,
+			    int(s.currentPixmapIndex),
 			    encodePixmapArrayPointer(s.getPixmapArray()));
     return temp;
 }
@@ -3405,7 +3420,7 @@ BurgerSpaceEngine::serialize(const IngredientSprite &is) const
 
 
 void
-BurgerSpaceEngine::saveGame(ostream &out, int slotNum)
+BurgerSpaceEngine::saveGame(ostream &out)
 {
     out << savedGameFormatVersion << "\n";
     out << "\n";
@@ -3508,7 +3523,7 @@ BurgerSpaceEngine::deserializeSprite(istream &in, bool enemy) const
     else
 	s = new Sprite(*pa, pos, speed, Couple(), collBoxPos, collBoxSize);
 
-    s->currentPixmapIndex = pixmapIndex;
+    s->currentPixmapIndex = static_cast<size_t>(pixmapIndex);
     return s;
 }
 
@@ -3541,7 +3556,7 @@ BurgerSpaceEngine::deserializeSpriteList(istream &in,
 {
     size_t numSprites;
     in >> numSprites;
-    if (!in || numSprites < 0 || numSprites > 9999)
+    if (!in || numSprites > 9999)
 	return false;
 
     list.clear();
@@ -3560,7 +3575,7 @@ BurgerSpaceEngine::deserializeSpriteList(istream &in,
 
 
 int
-BurgerSpaceEngine::loadGame(istream &in, int slotNum)
+BurgerSpaceEngine::loadGame(istream &in)
 {
     int version;
     in >> version;
@@ -3625,7 +3640,7 @@ BurgerSpaceEngine::loadGame(istream &in, int slotNum)
 	{
 	    size_t index;
 	    in >> index;
-	    if (!in || index < 0 || index >= enemySprites.size())
+	    if (!in || index >= enemySprites.size())
 		return -13;
 	    enemyIndexes.push_back(index);
 	}

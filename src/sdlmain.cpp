@@ -1,4 +1,4 @@
-/*  $Id: sdlmain.cpp,v 1.13 2009/02/27 02:50:42 sarrazip Exp $
+/*  $Id: sdlmain.cpp,v 1.14 2010/03/21 15:58:30 sarrazip Exp $
     sdlmain.cpp - main() function for BurgerSpace
 
     burgerspace - A hamburger-smashing video game.
@@ -44,6 +44,7 @@ static struct option knownOptions[] =
     { "no-sound",      no_argument,       NULL, 'n' },
     { "full-screen",   no_argument,       NULL, 'f' },
     { "old-motion",    no_argument,       NULL, 'o' },
+    { "no-auto-pause", no_argument,       NULL, 'p' },
     { "z-for-pepper",  no_argument,       NULL, 'z' },
 
     { NULL, 0, NULL, 0 }  // marks the end
@@ -84,6 +85,7 @@ displayHelp()
 "--no-sound         Disable sound effects [default is to enable them]\n"
 "--full-screen      Attempt to use full screen mode [default is window mode]\n"
 "--old-motion       Use the old player motion system [default is new system]\n"
+"--no-auto-pause    Do not pause automatically when window loses focus\n"
 "--z-for-pepper     Use Z key to shoot pepper [default is Ctrl key]\n"
 "\n"
     );
@@ -101,6 +103,7 @@ main(int argc, char *argv[])
     bool useSound = true;
     bool fullScreen = false;
     bool useOldMotionMode = false;
+    bool processActiveEvent = true;
     SDLKey pepperKey = SDLK_LCTRL;
 
 
@@ -160,6 +163,10 @@ main(int argc, char *argv[])
 		useOldMotionMode = true;
 		break;
 
+	    case 'p':
+		processActiveEvent = false;
+		break;
+
 	    case 'z':
 		pepperKey = SDLK_z;
 		break;
@@ -196,7 +203,8 @@ main(int argc, char *argv[])
     try
     {
 	BurgerSpaceEngine theBurgerSpaceEngine("BurgerSpace",
-		initLevelNo, useSound, fullScreen, useOldMotionMode, pepperKey);
+		initLevelNo, useSound, fullScreen, useOldMotionMode,
+		processActiveEvent, pepperKey);
 	theBurgerSpaceEngine.run(millisecondsPerFrame);
     }
     catch (const string &s)

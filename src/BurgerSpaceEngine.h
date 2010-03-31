@@ -1,4 +1,4 @@
-/*  $Id: BurgerSpaceEngine.h,v 1.31 2009/02/27 02:50:42 sarrazip Exp $
+/*  $Id: BurgerSpaceEngine.h,v 1.33 2010/03/21 15:58:30 sarrazip Exp $
     BurgerSpaceEngine.h - Main engine
 
     burgerspace - A hamburger-smashing video game.
@@ -49,6 +49,7 @@ public:
 			bool useSound,
 			bool fullScreen,
 			bool useOldMotionMode,
+			bool processActiveEvent,
 			SDLKey pepperKey)
 				throw(int, std::string);
     /*  See base class.
@@ -66,6 +67,9 @@ public:
 	In the old system, when the requested direction is impossible,
 	the player does not move.
 
+	'processActiveEvent' determines if the game automatically pauses
+	when the game window loses focus.
+
 	Throws a std::string or an integer code if an error occurs.
     */
 
@@ -74,6 +78,10 @@ public:
     */
 
     virtual void processKey(SDLKey keysym, bool pressed);
+    /*  Inherited.
+    */
+
+    virtual void processActivation(bool appActive);
     /*  Inherited.
     */
 
@@ -383,7 +391,7 @@ private:
     void serializeEnemySpriteList(std::ostream &out,
 				    const flatzebra::SpriteList &list) const;
     std::string serialize(const IngredientSprite &is) const;
-    void saveGame(std::ostream &out, int slotNum);
+    void saveGame(std::ostream &out);
     bool deserialize(std::istream &in, flatzebra::Couple &c) const;
     flatzebra::Sprite *deserializeSprite(std::istream &in,
 					bool enemy = false) const;
@@ -392,7 +400,7 @@ private:
 				bool enemies = false) const;
     IngredientSprite *deserializeIngredientSprite(std::istream &in,
 						IngredientGroup *ig) const;
-    int loadGame(std::istream &in, int slotNum);
+    int loadGame(std::istream &in);
     static std::string getSavedGamesDir();
     static std::string formSavedGameFilename(int slotNum);
     void showSlotDirectory();
