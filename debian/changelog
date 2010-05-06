@@ -1,3 +1,10 @@
+burgerspace (1.8.4-2) unstable; urgency=medium
+
+  * Fix FTBFS by bumping the libflatzebra version in build dependencies
+    (closes: #578561)
+
+ -- Francois Marier <francois@debian.org>  Thu, 06 May 2010 20:19:27 +1200
+
 burgerspace (1.8.4-1) unstable; urgency=low
 
   * New upstream release:
