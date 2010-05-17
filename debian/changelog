@@ -3,9 +3,11 @@ burgerspace (1.9.0-1) unstable; urgency=low
   * New upstream release:
     - new experimental 2-player network play
     - F11 toggles fullscreen mode
-  * Add a patch to fix the categories of the .desktop menu icon
 
- -- Francois Marier <francois@debian.org>  Mon, 17 May 2010 17:55:53 +1200
+  * Add a patch to fix the categories of the .desktop menu icon
+  * Fix manpage hyphens in a separate patch
+
+ -- Francois Marier <francois@debian.org>  Mon, 17 May 2010 18:06:11 +1200
 
 burgerspace (1.8.4-2) unstable; urgency=medium
 
