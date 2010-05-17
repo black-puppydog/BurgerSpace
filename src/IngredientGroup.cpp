@@ -1,8 +1,8 @@
-/*  $Id: IngredientGroup.cpp,v 1.9 2009/02/27 02:50:42 sarrazip Exp $
+/*  $Id: IngredientGroup.cpp,v 1.8.2.2 2010/05/09 01:18:46 sarrazip Exp $
     IngredientGroup.cpp - Group of sprites representing an "ingredient"
 
     burgerspace - A hamburger-smashing video game.
-    Copyright (C) 2001-2009 Pierre Sarrazin <http://sarrazip.com/>
+    Copyright (C) 2001-2010 Pierre Sarrazin <http://sarrazip.com/>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -60,8 +60,8 @@ IngredientGroup::areAllMembersLowered() const
 {
     size_t j;
     for (j = 0; j < 4; j++)
-	if (!members[j]->isLowered())
-	    return false;
+        if (!members[j]->isLowered())
+            return false;
     return true;
 }
 
@@ -87,7 +87,7 @@ void
 IngredientGroup::fallToNextFloor(int speedFactor)
 {
     for (size_t j = 0; j < 4; j++)
-	members[j]->setSpeed(Couple(0, speedFactor));
+        members[j]->setSpeed(Couple(0, speedFactor));
 
     state = FALL1;
 }
@@ -109,8 +109,8 @@ IngredientGroup::bounce(int speedFactor)
         members[j]->setSpeed(Couple(0, -speedFactor));
 
     for (SpriteList::iterator it = carriedEnemies.begin();
-    				it != carriedEnemies.end(); it++)
-	(*it)->setSpeed(Couple(0, -speedFactor));
+                                    it != carriedEnemies.end(); it++)
+        (*it)->setSpeed(Couple(0, -speedFactor));
 
     state = BOUNCE;
     bounceTime = 4;
@@ -124,8 +124,8 @@ IngredientGroup::stall()
         members[j]->getSpeed().zero();
 
     for (SpriteList::iterator it = carriedEnemies.begin();
-    				it != carriedEnemies.end(); it++)
-	(*it)->getSpeed().zero();
+                                    it != carriedEnemies.end(); it++)
+        (*it)->getSpeed().zero();
 
     state = STALL;
     stallTime = 2;
@@ -139,8 +139,8 @@ IngredientGroup::fallBack(int speedFactor)
         members[j]->setSpeed(Couple(0, +speedFactor));
 
     for (SpriteList::iterator it = carriedEnemies.begin();
-    				it != carriedEnemies.end(); it++)
-	(*it)->setSpeed(Couple(0, +speedFactor));
+                                    it != carriedEnemies.end(); it++)
+        (*it)->setSpeed(Couple(0, +speedFactor));
 
     state = FALL2;
 }

@@ -1,8 +1,8 @@
-/*  $Id: EnemySprite.h,v 1.9 2009/02/27 02:50:42 sarrazip Exp $
+/*  $Id: EnemySprite.h,v 1.8.2.6 2010/05/16 02:25:48 sarrazip Exp $
     EnemySprite.h - Sprite that represents an enemy of the player.
 
     burgerspace - A hamburger-smashing video game.
-    Copyright (C) 2001-2009 Pierre Sarrazin <http://sarrazip.com/>
+    Copyright (C) 2001-2010 Pierre Sarrazin <http://sarrazip.com/>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -42,10 +42,10 @@ class EnemySprite : public flatzebra::Sprite
 public:
 
     EnemySprite(const flatzebra::PixmapArray &pa,
-		flatzebra::Couple pos,
-		flatzebra::Couple speed,
-		flatzebra::Couple collBoxPos,
-		flatzebra::Couple collBosSize) throw(int);
+                flatzebra::Couple pos,
+                flatzebra::Couple speed,
+                flatzebra::Couple collBoxPos,
+                flatzebra::Couple collBosSize) throw(int);
     /*  Calls Sprite constructor.
     */
 
@@ -55,15 +55,15 @@ public:
 
     void setCarryingGroup(IngredientGroup *g);
     /*  Sets the ingredient group that is currently carrying this enemy.
-	'g' can be null, to indicate that the enemy is not carried.
+        'g' can be null, to indicate that the enemy is not carried.
 
-	This object never owns an IngredientGroup object.
+        This object never owns an IngredientGroup object.
     */
 
     IngredientGroup *getCarryingGroup() const;
     /*  Returns a pointer to the ingredient group that is currently
-	carrying this enemy.
-	This pointer can be null, to indicate that the enemy is not carried.
+        carrying this enemy.
+        This pointer can be null, to indicate that the enemy is not carried.
     */
 
     void setDisappearanceTime(int t);
@@ -74,21 +74,35 @@ public:
     int  getTimeToDie() const;
     int  decTimeToDie();
 
+    void setLastDirection(int dir);
+    int getLastDirection() const;
+
+    void setClimbingFromPlate(bool climbing);
+    bool isClimbingFromPlate() const;
+
 private:
 
     IngredientGroup *carryingGroup;
-	/*  Designates the ingredient group that is carrying this enemy,
-	    if applicable; NULL normally.
-	*/
+        /*  Designates the ingredient group that is carrying this enemy,
+            if applicable; NULL normally.
+        */
 
     int disappearanceTime;
-	/*  Decreasing counter of the number of ticks for which this
-	    sprite will be insivible.
-	    Used typically when the sprite has just finished being
-	    carried by an ingredient group.
-	*/
+        /*  Decreasing counter of the number of ticks for which this
+            sprite will be insivible.
+            Used typically when the sprite has just finished being
+            carried by an ingredient group.
+        */
 
     int timeToDie;
+
+    int lastDirection;  // -1, RIGHT, UP, LEFT or DOWN
+
+    bool climbingFromPlate;
+
+    // Forbidden operations:
+    EnemySprite(const EnemySprite &);
+    EnemySprite &operator = (const EnemySprite &);
 
 };
 
@@ -108,7 +122,7 @@ inline int EnemySprite::getDisappearanceTime() const
 inline int EnemySprite::decDisappearanceTime()
 {
     if (disappearanceTime != 0)
-	disappearanceTime--;
+        disappearanceTime--;
     return disappearanceTime;
 }
 inline void EnemySprite::setTimeToDie(int t)
@@ -122,7 +136,7 @@ inline int EnemySprite::getTimeToDie() const
 inline int EnemySprite::decTimeToDie()
 {
     if (timeToDie != 0)
-	timeToDie--;
+        timeToDie--;
     return timeToDie;
 }
 

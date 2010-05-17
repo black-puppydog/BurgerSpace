@@ -1,33 +1,80 @@
-# $Id: Makefile.am,v 1.20 2007/12/25 07:06:25 sarrazip Exp $
+# $Id: Makefile.am,v 1.20.2.12 2010/05/10 02:50:11 sarrazip Exp $
 
 bin_PROGRAMS = burgerspace
 
+noinst_LTLIBRARIES = libcore.la
+
+if BUILD_NETWORK
+
+bin_PROGRAMS += burgerspace-server
+
+burgerspace_server_SOURCES = \
+	server.cpp
+
+burgerspace_server_LDADD = \
+	libcore.la \
+	$(FLATZEBRA_LIBS)
+
+burgerspace_server_CXXFLAGS = \
+	-DPROGRAM=\"$(PACKAGE)-server\" \
+	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+	-DDEFAULT_UDP_SERVER_PORT=$(DEFAULT_UDP_SERVER_PORT) \
+	-I$(top_srcdir)/src/images \
+	$(FLATZEBRA_CFLAGS)
+
+endif
+
 burgerspace_SOURCES = \
-	BurgerSpaceEngine.cpp \
-	BurgerSpaceEngine.h \
+	client.cpp \
+	BurgerSpaceClient.cpp \
+	BurgerSpaceClient.h \
+	LocalServer.cpp \
+	LocalServer.h \
+	RemoteServer.cpp \
+	RemoteServer.h \
+	Controller.h
+
+burgerspace_LDADD = \
+	libcore.la \
+	$(FLATZEBRA_LIBS)
+
+burgerspace_CXXFLAGS = \
+	-DPROGRAM=\"$(PACKAGE)\" \
+	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+	-DDEFAULT_UDP_SERVER_PORT=$(DEFAULT_UDP_SERVER_PORT) \
+	-I$(top_srcdir)/src/images \
+	$(FLATZEBRA_CFLAGS)
+
+
+libcore_la_SOURCES = \
+	BurgerSpaceServer.cpp \
+	BurgerSpaceServer.h \
 	IngredientGroup.cpp \
 	IngredientGroup.h \
 	IngredientSprite.h \
 	EnemySprite.cpp \
 	EnemySprite.h \
-	ChefController.h \
 	util.h \
-	sdlmain.cpp
+	pixmaps.h
 
-burgerspace_LDADD = \
+libcore_la_LIBADD = \
 	$(FLATZEBRA_LIBS)
 
-burgerspace_CXXFLAGS = \
+libcore_la_CXXFLAGS = \
 	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
 	-I$(top_srcdir)/src/images \
 	$(FLATZEBRA_CFLAGS)
 
-# Only test the --version option if GNU getopt is available:
+
+# Only test command-line options if GNU getopt is available:
 if HAVE_GETOPT_LONG
 check: all
 	test "`./$(PACKAGE) --version`" = "$(PACKAGE) $(VERSION)"
 	./$(PACKAGE) --version >& /dev/null
 	./$(PACKAGE) --help >& /dev/null
+	test "`./$(PACKAGE)-server --version`" = "$(PACKAGE)-server ($(PACKAGE) $(VERSION))"
+	./$(PACKAGE)-server --version >& /dev/null
+	./$(PACKAGE)-server --help >& /dev/null
 endif
 
 run: all check

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=@PACKAGE_FULL_NAME@
+Categories=X-Red-Hat-Base;Application;Game;ArcadeGame;
+Comment=@PACKAGE_SUMMARY_EN@
+Comment[fr]=@PACKAGE_SUMMARY_FR@
+Exec=@PACKAGE@
+Icon=@PACKAGE@.png
+Terminal=0
+Type=Application
