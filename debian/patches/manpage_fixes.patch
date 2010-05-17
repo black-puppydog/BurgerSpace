@@ -3,33 +3,31 @@ Author: Francois Marier <francois@debian.org>
 Forwarded: sarrazip@sarrazip.com
 Last-Update: 2010-05-17
 
---- a/doc/burgerspace-server.6
-+++ b/doc/burgerspace-server.6
+--- a/doc/burgerspace-server.6.in
++++ b/doc/burgerspace-server.6.in
 @@ -43,12 +43,12 @@ used to specify a non-default listening port (see below).
  After the server has started, the user who wants to control the chef
  must start the client with this command:
  .PP
--burgerspace --server=the.server.hostname.com --chef
-+burgerspace \-\-server=the.server.hostname.com \-\-chef
+-@PACKAGE@ --server=the.server.hostname.com --chef
++@PACKAGE@ \-\-server=the.server.hostname.com \-\-chef
  .PP
 -Use the appropriate hostname or IP address as the argument for --server.
 -The user who wants to control the egg must give the --enemy option instead
 -of --chef.
--The --port option can be added to the burgerspace command-line to specify
+-The --port option can be added to the @PACKAGE@ command-line to specify
 +Use the appropriate hostname or IP address as the argument for \-\-server.
 +The user who wants to control the egg must give the \-\-enemy option instead
 +of \-\-chef.
-+The \-\-port option can be added to the burgerspace command-line to specify
++The \-\-port option can be added to the @PACKAGE@ command-line to specify
  the server port, if the server was started with a non-default UDP listening
  port.
  .PP
-diff --git a/doc/burgerspace.6 b/doc/burgerspace.6
-index 9bc73ad..ef4c1c7 100644
---- a/doc/burgerspace.6
-+++ b/doc/burgerspace.6
+--- a/doc/burgerspace.6.in
++++ b/doc/burgerspace.6.in
 @@ -90,13 +90,13 @@ Minimum is 1.  Maximum is 1000.  50 means 20 frames per second.
  \fB\-\-server=HOSTNAME\fR
- Start as a client that connects to a BurgerSpace server running
+ Start as a client that connects to a @PACKAGE_FULL_NAME@ server running
  on the given host or IP address.
 -Examples: --server=localhost, --server=192.168.1.2
 +Examples: \-\-server=localhost, \-\-server=192.168.1.2
@@ -37,9 +35,9 @@ index 9bc73ad..ef4c1c7 100644
  that does not try to connect to any server.
  .TP
  \fB\-\-port=PORT\fR
- UDP port number on which the BurgerSpace server is running.
+ UDP port number on which the @PACKAGE_FULL_NAME@ server is running.
 -This option is only useful with --server.
 +This option is only useful with \-\-server.
- The default is 49152.
+ The default is @DEFAULT_UDP_SERVER_PORT@.
  .SH LICENSE
  This program is free software; you may redistribute it under the terms of

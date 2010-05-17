@@ -3,13 +3,13 @@ Author: Francois Marier <francois@debian.org>
 Forwarded: not-needed
 Last-Update: 2010-05-17
 
---- a/src/burgerspace.desktop
-+++ b/src/burgerspace.desktop
+--- a/src/burgerspace.desktop.in
++++ b/src/burgerspace.desktop.in
 @@ -1,6 +1,6 @@
  [Desktop Entry]
- Name=BurgerSpace
+ Name=@PACKAGE_FULL_NAME@
 -Categories=X-Red-Hat-Base;Application;Game;ArcadeGame;
 +Categories=Game;ArcadeGame;
- Comment=A hamburger-smashing video game
- Comment[fr]=Un jeu de hamburgers qu'on écrase
- Exec=burgerspace
+ Comment=@PACKAGE_SUMMARY_EN@
+ Comment[fr]=@PACKAGE_SUMMARY_FR@
+ Exec=@PACKAGE@
