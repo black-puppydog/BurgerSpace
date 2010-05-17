@@ -15,7 +15,8 @@
 
 @SET_MAKE@
 
-# $Id: Makefile.am,v 1.20 2007/12/25 07:06:25 sarrazip Exp $
+# $Id: Makefile.am,v 1.20.2.12 2010/05/10 02:50:11 sarrazip Exp $
+
 
 
 VPATH = @srcdir@
@@ -38,44 +39,82 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-bin_PROGRAMS = burgerspace$(EXEEXT)
+bin_PROGRAMS = burgerspace$(EXEEXT) $(am__EXEEXT_1)
+@BUILD_NETWORK_TRUE@am__append_1 = burgerspace-server
 subdir = src
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/burgerspace.desktop.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/macros/ac_compile_warnings.m4 \
-	$(top_srcdir)/macros/getopt_long.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/macros/getopt_long.m4 \
+	$(top_srcdir)/macros/libtool.m4 \
+	$(top_srcdir)/macros/ltoptions.m4 \
+	$(top_srcdir)/macros/ltsugar.m4 \
+	$(top_srcdir)/macros/ltversion.m4 \
+	$(top_srcdir)/macros/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = burgerspace.desktop
 CONFIG_CLEAN_VPATH_FILES =
+LTLIBRARIES = $(noinst_LTLIBRARIES)
+am__DEPENDENCIES_1 =
+libcore_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_libcore_la_OBJECTS = libcore_la-BurgerSpaceServer.lo \
+	libcore_la-IngredientGroup.lo libcore_la-EnemySprite.lo
+libcore_la_OBJECTS = $(am_libcore_la_OBJECTS)
+libcore_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(libcore_la_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+@BUILD_NETWORK_TRUE@am__EXEEXT_1 = burgerspace-server$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopentrydir)" \
 	"$(DESTDIR)$(pixmapdir)" "$(DESTDIR)$(pkgsounddir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_burgerspace_OBJECTS = burgerspace-BurgerSpaceEngine.$(OBJEXT) \
-	burgerspace-IngredientGroup.$(OBJEXT) \
-	burgerspace-EnemySprite.$(OBJEXT) \
-	burgerspace-sdlmain.$(OBJEXT)
+am_burgerspace_OBJECTS = burgerspace-client.$(OBJEXT) \
+	burgerspace-BurgerSpaceClient.$(OBJEXT) \
+	burgerspace-LocalServer.$(OBJEXT) \
+	burgerspace-RemoteServer.$(OBJEXT)
 burgerspace_OBJECTS = $(am_burgerspace_OBJECTS)
-am__DEPENDENCIES_1 =
-burgerspace_DEPENDENCIES = $(am__DEPENDENCIES_1)
-burgerspace_LINK = $(CXXLD) $(burgerspace_CXXFLAGS) $(CXXFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+burgerspace_DEPENDENCIES = libcore.la $(am__DEPENDENCIES_1)
+burgerspace_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(burgerspace_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am__burgerspace_server_SOURCES_DIST = server.cpp
+@BUILD_NETWORK_TRUE@am_burgerspace_server_OBJECTS =  \
+@BUILD_NETWORK_TRUE@	burgerspace_server-server.$(OBJEXT)
+burgerspace_server_OBJECTS = $(am_burgerspace_server_OBJECTS)
+@BUILD_NETWORK_TRUE@burgerspace_server_DEPENDENCIES = libcore.la \
+@BUILD_NETWORK_TRUE@	$(am__DEPENDENCIES_1)
+burgerspace_server_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(burgerspace_server_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
-CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
-	-o $@
+CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(burgerspace_SOURCES)
-DIST_SOURCES = $(burgerspace_SOURCES)
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+SOURCES = $(libcore_la_SOURCES) $(burgerspace_SOURCES) \
+	$(burgerspace_server_SOURCES)
+DIST_SOURCES = $(libcore_la_SOURCES) $(burgerspace_SOURCES) \
+	$(am__burgerspace_server_SOURCES_DIST)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -103,23 +142,32 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DEFAULT_UDP_SERVER_PORT = @DEFAULT_UDP_SERVER_PORT@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DSYMUTIL = @DSYMUTIL@
+DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
+FGREP = @FGREP@
 FLATZEBRA_CFLAGS = @FLATZEBRA_CFLAGS@
 FLATZEBRA_LIBS = @FLATZEBRA_LIBS@
 GREP = @GREP@
@@ -128,22 +176,38 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBTOOL = @LIBTOOL@
+LIPO = @LIPO@
+LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
+MANUAL_DATE_EN = @MANUAL_DATE_EN@
+MANUAL_DATE_FR = @MANUAL_DATE_FR@
 MINVER_FLATZEBRA = @MINVER_FLATZEBRA@
 MKDIR_P = @MKDIR_P@
+NM = @NM@
+NMEDIT = @NMEDIT@
+OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
+OTOOL = @OTOOL@
+OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
+PACKAGE_FULL_NAME = @PACKAGE_FULL_NAME@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
+PACKAGE_SUMMARY_EN = @PACKAGE_SUMMARY_EN@
+PACKAGE_SUMMARY_FR = @PACKAGE_SUMMARY_FR@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+RANLIB = @RANLIB@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -152,7 +216,9 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
+ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
@@ -183,6 +249,7 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
+lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
@@ -202,22 +269,57 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+noinst_LTLIBRARIES = libcore.la
+@BUILD_NETWORK_TRUE@burgerspace_server_SOURCES = \
+@BUILD_NETWORK_TRUE@	server.cpp
+
+@BUILD_NETWORK_TRUE@burgerspace_server_LDADD = \
+@BUILD_NETWORK_TRUE@	libcore.la \
+@BUILD_NETWORK_TRUE@	$(FLATZEBRA_LIBS)
+
+@BUILD_NETWORK_TRUE@burgerspace_server_CXXFLAGS = \
+@BUILD_NETWORK_TRUE@	-DPROGRAM=\"$(PACKAGE)-server\" \
+@BUILD_NETWORK_TRUE@	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+@BUILD_NETWORK_TRUE@	-DDEFAULT_UDP_SERVER_PORT=$(DEFAULT_UDP_SERVER_PORT) \
+@BUILD_NETWORK_TRUE@	-I$(top_srcdir)/src/images \
+@BUILD_NETWORK_TRUE@	$(FLATZEBRA_CFLAGS)
+
 burgerspace_SOURCES = \
-	BurgerSpaceEngine.cpp \
-	BurgerSpaceEngine.h \
+	client.cpp \
+	BurgerSpaceClient.cpp \
+	BurgerSpaceClient.h \
+	LocalServer.cpp \
+	LocalServer.h \
+	RemoteServer.cpp \
+	RemoteServer.h \
+	Controller.h
+
+burgerspace_LDADD = \
+	libcore.la \
+	$(FLATZEBRA_LIBS)
+
+burgerspace_CXXFLAGS = \
+	-DPROGRAM=\"$(PACKAGE)\" \
+	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+	-DDEFAULT_UDP_SERVER_PORT=$(DEFAULT_UDP_SERVER_PORT) \
+	-I$(top_srcdir)/src/images \
+	$(FLATZEBRA_CFLAGS)
+
+libcore_la_SOURCES = \
+	BurgerSpaceServer.cpp \
+	BurgerSpaceServer.h \
 	IngredientGroup.cpp \
 	IngredientGroup.h \
 	IngredientSprite.h \
 	EnemySprite.cpp \
 	EnemySprite.h \
-	ChefController.h \
 	util.h \
-	sdlmain.cpp
+	pixmaps.h
 
-burgerspace_LDADD = \
+libcore_la_LIBADD = \
 	$(FLATZEBRA_LIBS)
 
-burgerspace_CXXFLAGS = \
+libcore_la_CXXFLAGS = \
 	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
 	-I$(top_srcdir)/src/images \
 	$(FLATZEBRA_CFLAGS)
@@ -365,7 +467,7 @@ MAINTAINERCLEANFILES = Makefile.in
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .o .obj
+.SUFFIXES: .cpp .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -396,13 +498,26 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+burgerspace.desktop: $(top_builddir)/config.status $(srcdir)/burgerspace.desktop.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+libcore.la: $(libcore_la_OBJECTS) $(libcore_la_DEPENDENCIES) 
+	$(libcore_la_LINK)  $(libcore_la_OBJECTS) $(libcore_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
 	for p in $$list; do echo "$$p $$p"; done | \
 	sed 's/$(EXEEXT)$$//' | \
-	while read p p1; do if test -f $$p; \
+	while read p p1; do if test -f $$p || test -f $$p1; \
 	  then echo "$$p"; echo "$$p"; else :; fi; \
 	done | \
 	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
@@ -416,8 +531,8 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	while read type dir files; do \
 	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
 	    test -z "$$files" || { \
-	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
-	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
+	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
+	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
 	    } \
 	; done
 
@@ -432,10 +547,19 @@ uninstall-binPROGRAMS:
 	cd "$(DESTDIR)$(bindir)" && rm -f $$files
 
 clean-binPROGRAMS:
-	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+	@list='$(bin_PROGRAMS)'; test -n "$$list" || exit 0; \
+	echo " rm -f" $$list; \
+	rm -f $$list || exit $$?; \
+	test -n "$(EXEEXT)" || exit 0; \
+	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
+	echo " rm -f" $$list; \
+	rm -f $$list
 burgerspace$(EXEEXT): $(burgerspace_OBJECTS) $(burgerspace_DEPENDENCIES) 
 	@rm -f burgerspace$(EXEEXT)
 	$(burgerspace_LINK) $(burgerspace_OBJECTS) $(burgerspace_LDADD) $(LIBS)
+burgerspace-server$(EXEEXT): $(burgerspace_server_OBJECTS) $(burgerspace_server_DEPENDENCIES) 
+	@rm -f burgerspace-server$(EXEEXT)
+	$(burgerspace_server_LINK) $(burgerspace_server_OBJECTS) $(burgerspace_server_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -443,10 +567,14 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-BurgerSpaceEngine.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-EnemySprite.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-IngredientGroup.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-sdlmain.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-BurgerSpaceClient.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-LocalServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-RemoteServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace-client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/burgerspace_server-server.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcore_la-BurgerSpaceServer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcore_la-EnemySprite.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcore_la-IngredientGroup.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -462,61 +590,109 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-burgerspace-BurgerSpaceEngine.o: BurgerSpaceEngine.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-BurgerSpaceEngine.o -MD -MP -MF $(DEPDIR)/burgerspace-BurgerSpaceEngine.Tpo -c -o burgerspace-BurgerSpaceEngine.o `test -f 'BurgerSpaceEngine.cpp' || echo '$(srcdir)/'`BurgerSpaceEngine.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-BurgerSpaceEngine.Tpo $(DEPDIR)/burgerspace-BurgerSpaceEngine.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BurgerSpaceEngine.cpp' object='burgerspace-BurgerSpaceEngine.o' libtool=no @AMDEPBACKSLASH@
+.cpp.lo:
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-BurgerSpaceEngine.o `test -f 'BurgerSpaceEngine.cpp' || echo '$(srcdir)/'`BurgerSpaceEngine.cpp
+@am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
-burgerspace-BurgerSpaceEngine.obj: BurgerSpaceEngine.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-BurgerSpaceEngine.obj -MD -MP -MF $(DEPDIR)/burgerspace-BurgerSpaceEngine.Tpo -c -o burgerspace-BurgerSpaceEngine.obj `if test -f 'BurgerSpaceEngine.cpp'; then $(CYGPATH_W) 'BurgerSpaceEngine.cpp'; else $(CYGPATH_W) '$(srcdir)/BurgerSpaceEngine.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-BurgerSpaceEngine.Tpo $(DEPDIR)/burgerspace-BurgerSpaceEngine.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BurgerSpaceEngine.cpp' object='burgerspace-BurgerSpaceEngine.obj' libtool=no @AMDEPBACKSLASH@
+libcore_la-BurgerSpaceServer.lo: BurgerSpaceServer.cpp
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcore_la_CXXFLAGS) $(CXXFLAGS) -MT libcore_la-BurgerSpaceServer.lo -MD -MP -MF $(DEPDIR)/libcore_la-BurgerSpaceServer.Tpo -c -o libcore_la-BurgerSpaceServer.lo `test -f 'BurgerSpaceServer.cpp' || echo '$(srcdir)/'`BurgerSpaceServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libcore_la-BurgerSpaceServer.Tpo $(DEPDIR)/libcore_la-BurgerSpaceServer.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BurgerSpaceServer.cpp' object='libcore_la-BurgerSpaceServer.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-BurgerSpaceEngine.obj `if test -f 'BurgerSpaceEngine.cpp'; then $(CYGPATH_W) 'BurgerSpaceEngine.cpp'; else $(CYGPATH_W) '$(srcdir)/BurgerSpaceEngine.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcore_la_CXXFLAGS) $(CXXFLAGS) -c -o libcore_la-BurgerSpaceServer.lo `test -f 'BurgerSpaceServer.cpp' || echo '$(srcdir)/'`BurgerSpaceServer.cpp
 
-burgerspace-IngredientGroup.o: IngredientGroup.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-IngredientGroup.o -MD -MP -MF $(DEPDIR)/burgerspace-IngredientGroup.Tpo -c -o burgerspace-IngredientGroup.o `test -f 'IngredientGroup.cpp' || echo '$(srcdir)/'`IngredientGroup.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-IngredientGroup.Tpo $(DEPDIR)/burgerspace-IngredientGroup.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='IngredientGroup.cpp' object='burgerspace-IngredientGroup.o' libtool=no @AMDEPBACKSLASH@
+libcore_la-IngredientGroup.lo: IngredientGroup.cpp
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcore_la_CXXFLAGS) $(CXXFLAGS) -MT libcore_la-IngredientGroup.lo -MD -MP -MF $(DEPDIR)/libcore_la-IngredientGroup.Tpo -c -o libcore_la-IngredientGroup.lo `test -f 'IngredientGroup.cpp' || echo '$(srcdir)/'`IngredientGroup.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libcore_la-IngredientGroup.Tpo $(DEPDIR)/libcore_la-IngredientGroup.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='IngredientGroup.cpp' object='libcore_la-IngredientGroup.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-IngredientGroup.o `test -f 'IngredientGroup.cpp' || echo '$(srcdir)/'`IngredientGroup.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcore_la_CXXFLAGS) $(CXXFLAGS) -c -o libcore_la-IngredientGroup.lo `test -f 'IngredientGroup.cpp' || echo '$(srcdir)/'`IngredientGroup.cpp
 
-burgerspace-IngredientGroup.obj: IngredientGroup.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-IngredientGroup.obj -MD -MP -MF $(DEPDIR)/burgerspace-IngredientGroup.Tpo -c -o burgerspace-IngredientGroup.obj `if test -f 'IngredientGroup.cpp'; then $(CYGPATH_W) 'IngredientGroup.cpp'; else $(CYGPATH_W) '$(srcdir)/IngredientGroup.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-IngredientGroup.Tpo $(DEPDIR)/burgerspace-IngredientGroup.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='IngredientGroup.cpp' object='burgerspace-IngredientGroup.obj' libtool=no @AMDEPBACKSLASH@
+libcore_la-EnemySprite.lo: EnemySprite.cpp
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcore_la_CXXFLAGS) $(CXXFLAGS) -MT libcore_la-EnemySprite.lo -MD -MP -MF $(DEPDIR)/libcore_la-EnemySprite.Tpo -c -o libcore_la-EnemySprite.lo `test -f 'EnemySprite.cpp' || echo '$(srcdir)/'`EnemySprite.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libcore_la-EnemySprite.Tpo $(DEPDIR)/libcore_la-EnemySprite.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='EnemySprite.cpp' object='libcore_la-EnemySprite.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-IngredientGroup.obj `if test -f 'IngredientGroup.cpp'; then $(CYGPATH_W) 'IngredientGroup.cpp'; else $(CYGPATH_W) '$(srcdir)/IngredientGroup.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcore_la_CXXFLAGS) $(CXXFLAGS) -c -o libcore_la-EnemySprite.lo `test -f 'EnemySprite.cpp' || echo '$(srcdir)/'`EnemySprite.cpp
 
-burgerspace-EnemySprite.o: EnemySprite.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-EnemySprite.o -MD -MP -MF $(DEPDIR)/burgerspace-EnemySprite.Tpo -c -o burgerspace-EnemySprite.o `test -f 'EnemySprite.cpp' || echo '$(srcdir)/'`EnemySprite.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-EnemySprite.Tpo $(DEPDIR)/burgerspace-EnemySprite.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='EnemySprite.cpp' object='burgerspace-EnemySprite.o' libtool=no @AMDEPBACKSLASH@
+burgerspace-client.o: client.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-client.o -MD -MP -MF $(DEPDIR)/burgerspace-client.Tpo -c -o burgerspace-client.o `test -f 'client.cpp' || echo '$(srcdir)/'`client.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-client.Tpo $(DEPDIR)/burgerspace-client.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='client.cpp' object='burgerspace-client.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-EnemySprite.o `test -f 'EnemySprite.cpp' || echo '$(srcdir)/'`EnemySprite.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-client.o `test -f 'client.cpp' || echo '$(srcdir)/'`client.cpp
 
-burgerspace-EnemySprite.obj: EnemySprite.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-EnemySprite.obj -MD -MP -MF $(DEPDIR)/burgerspace-EnemySprite.Tpo -c -o burgerspace-EnemySprite.obj `if test -f 'EnemySprite.cpp'; then $(CYGPATH_W) 'EnemySprite.cpp'; else $(CYGPATH_W) '$(srcdir)/EnemySprite.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-EnemySprite.Tpo $(DEPDIR)/burgerspace-EnemySprite.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='EnemySprite.cpp' object='burgerspace-EnemySprite.obj' libtool=no @AMDEPBACKSLASH@
+burgerspace-client.obj: client.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-client.obj -MD -MP -MF $(DEPDIR)/burgerspace-client.Tpo -c -o burgerspace-client.obj `if test -f 'client.cpp'; then $(CYGPATH_W) 'client.cpp'; else $(CYGPATH_W) '$(srcdir)/client.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-client.Tpo $(DEPDIR)/burgerspace-client.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='client.cpp' object='burgerspace-client.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-EnemySprite.obj `if test -f 'EnemySprite.cpp'; then $(CYGPATH_W) 'EnemySprite.cpp'; else $(CYGPATH_W) '$(srcdir)/EnemySprite.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-client.obj `if test -f 'client.cpp'; then $(CYGPATH_W) 'client.cpp'; else $(CYGPATH_W) '$(srcdir)/client.cpp'; fi`
 
-burgerspace-sdlmain.o: sdlmain.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-sdlmain.o -MD -MP -MF $(DEPDIR)/burgerspace-sdlmain.Tpo -c -o burgerspace-sdlmain.o `test -f 'sdlmain.cpp' || echo '$(srcdir)/'`sdlmain.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-sdlmain.Tpo $(DEPDIR)/burgerspace-sdlmain.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='sdlmain.cpp' object='burgerspace-sdlmain.o' libtool=no @AMDEPBACKSLASH@
+burgerspace-BurgerSpaceClient.o: BurgerSpaceClient.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-BurgerSpaceClient.o -MD -MP -MF $(DEPDIR)/burgerspace-BurgerSpaceClient.Tpo -c -o burgerspace-BurgerSpaceClient.o `test -f 'BurgerSpaceClient.cpp' || echo '$(srcdir)/'`BurgerSpaceClient.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-BurgerSpaceClient.Tpo $(DEPDIR)/burgerspace-BurgerSpaceClient.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BurgerSpaceClient.cpp' object='burgerspace-BurgerSpaceClient.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-sdlmain.o `test -f 'sdlmain.cpp' || echo '$(srcdir)/'`sdlmain.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-BurgerSpaceClient.o `test -f 'BurgerSpaceClient.cpp' || echo '$(srcdir)/'`BurgerSpaceClient.cpp
 
-burgerspace-sdlmain.obj: sdlmain.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-sdlmain.obj -MD -MP -MF $(DEPDIR)/burgerspace-sdlmain.Tpo -c -o burgerspace-sdlmain.obj `if test -f 'sdlmain.cpp'; then $(CYGPATH_W) 'sdlmain.cpp'; else $(CYGPATH_W) '$(srcdir)/sdlmain.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-sdlmain.Tpo $(DEPDIR)/burgerspace-sdlmain.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='sdlmain.cpp' object='burgerspace-sdlmain.obj' libtool=no @AMDEPBACKSLASH@
+burgerspace-BurgerSpaceClient.obj: BurgerSpaceClient.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-BurgerSpaceClient.obj -MD -MP -MF $(DEPDIR)/burgerspace-BurgerSpaceClient.Tpo -c -o burgerspace-BurgerSpaceClient.obj `if test -f 'BurgerSpaceClient.cpp'; then $(CYGPATH_W) 'BurgerSpaceClient.cpp'; else $(CYGPATH_W) '$(srcdir)/BurgerSpaceClient.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-BurgerSpaceClient.Tpo $(DEPDIR)/burgerspace-BurgerSpaceClient.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BurgerSpaceClient.cpp' object='burgerspace-BurgerSpaceClient.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-sdlmain.obj `if test -f 'sdlmain.cpp'; then $(CYGPATH_W) 'sdlmain.cpp'; else $(CYGPATH_W) '$(srcdir)/sdlmain.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-BurgerSpaceClient.obj `if test -f 'BurgerSpaceClient.cpp'; then $(CYGPATH_W) 'BurgerSpaceClient.cpp'; else $(CYGPATH_W) '$(srcdir)/BurgerSpaceClient.cpp'; fi`
+
+burgerspace-LocalServer.o: LocalServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-LocalServer.o -MD -MP -MF $(DEPDIR)/burgerspace-LocalServer.Tpo -c -o burgerspace-LocalServer.o `test -f 'LocalServer.cpp' || echo '$(srcdir)/'`LocalServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-LocalServer.Tpo $(DEPDIR)/burgerspace-LocalServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='LocalServer.cpp' object='burgerspace-LocalServer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-LocalServer.o `test -f 'LocalServer.cpp' || echo '$(srcdir)/'`LocalServer.cpp
+
+burgerspace-LocalServer.obj: LocalServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-LocalServer.obj -MD -MP -MF $(DEPDIR)/burgerspace-LocalServer.Tpo -c -o burgerspace-LocalServer.obj `if test -f 'LocalServer.cpp'; then $(CYGPATH_W) 'LocalServer.cpp'; else $(CYGPATH_W) '$(srcdir)/LocalServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-LocalServer.Tpo $(DEPDIR)/burgerspace-LocalServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='LocalServer.cpp' object='burgerspace-LocalServer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-LocalServer.obj `if test -f 'LocalServer.cpp'; then $(CYGPATH_W) 'LocalServer.cpp'; else $(CYGPATH_W) '$(srcdir)/LocalServer.cpp'; fi`
+
+burgerspace-RemoteServer.o: RemoteServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-RemoteServer.o -MD -MP -MF $(DEPDIR)/burgerspace-RemoteServer.Tpo -c -o burgerspace-RemoteServer.o `test -f 'RemoteServer.cpp' || echo '$(srcdir)/'`RemoteServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-RemoteServer.Tpo $(DEPDIR)/burgerspace-RemoteServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RemoteServer.cpp' object='burgerspace-RemoteServer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-RemoteServer.o `test -f 'RemoteServer.cpp' || echo '$(srcdir)/'`RemoteServer.cpp
+
+burgerspace-RemoteServer.obj: RemoteServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -MT burgerspace-RemoteServer.obj -MD -MP -MF $(DEPDIR)/burgerspace-RemoteServer.Tpo -c -o burgerspace-RemoteServer.obj `if test -f 'RemoteServer.cpp'; then $(CYGPATH_W) 'RemoteServer.cpp'; else $(CYGPATH_W) '$(srcdir)/RemoteServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace-RemoteServer.Tpo $(DEPDIR)/burgerspace-RemoteServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RemoteServer.cpp' object='burgerspace-RemoteServer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace-RemoteServer.obj `if test -f 'RemoteServer.cpp'; then $(CYGPATH_W) 'RemoteServer.cpp'; else $(CYGPATH_W) '$(srcdir)/RemoteServer.cpp'; fi`
+
+burgerspace_server-server.o: server.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_server_CXXFLAGS) $(CXXFLAGS) -MT burgerspace_server-server.o -MD -MP -MF $(DEPDIR)/burgerspace_server-server.Tpo -c -o burgerspace_server-server.o `test -f 'server.cpp' || echo '$(srcdir)/'`server.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace_server-server.Tpo $(DEPDIR)/burgerspace_server-server.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='server.cpp' object='burgerspace_server-server.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_server_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace_server-server.o `test -f 'server.cpp' || echo '$(srcdir)/'`server.cpp
+
+burgerspace_server-server.obj: server.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_server_CXXFLAGS) $(CXXFLAGS) -MT burgerspace_server-server.obj -MD -MP -MF $(DEPDIR)/burgerspace_server-server.Tpo -c -o burgerspace_server-server.obj `if test -f 'server.cpp'; then $(CYGPATH_W) 'server.cpp'; else $(CYGPATH_W) '$(srcdir)/server.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/burgerspace_server-server.Tpo $(DEPDIR)/burgerspace_server-server.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='server.cpp' object='burgerspace_server-server.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(burgerspace_server_CXXFLAGS) $(CXXFLAGS) -c -o burgerspace_server-server.obj `if test -f 'server.cpp'; then $(CYGPATH_W) 'server.cpp'; else $(CYGPATH_W) '$(srcdir)/server.cpp'; fi`
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
 install-desktopentryDATA: $(desktopentry_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(desktopentrydir)" || $(MKDIR_P) "$(DESTDIR)$(desktopentrydir)"
@@ -662,7 +838,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(DATA)
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA)
 installdirs:
 	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopentrydir)" "$(DESTDIR)$(pixmapdir)" "$(DESTDIR)$(pkgsounddir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
@@ -695,7 +871,8 @@ maintainer-clean-generic:
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-libtool \
+	clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -751,7 +928,8 @@ maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -767,8 +945,9 @@ uninstall-am: uninstall-binPROGRAMS uninstall-desktopentryDATA \
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic ctags distclean distclean-compile \
-	distclean-generic distclean-tags distdir dvi dvi-am html \
+	clean-generic clean-libtool clean-noinstLTLIBRARIES ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-binPROGRAMS \
 	install-data install-data-am install-desktopentryDATA \
 	install-dvi install-dvi-am install-exec install-exec-am \
@@ -777,16 +956,20 @@ uninstall-am: uninstall-binPROGRAMS uninstall-desktopentryDATA \
 	install-pkgsoundDATA install-ps install-ps-am install-strip \
 	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-desktopentryDATA \
-	uninstall-pixmapDATA uninstall-pkgsoundDATA
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-binPROGRAMS \
+	uninstall-desktopentryDATA uninstall-pixmapDATA \
+	uninstall-pkgsoundDATA
 
 
-# Only test the --version option if GNU getopt is available:
+# Only test command-line options if GNU getopt is available:
 @HAVE_GETOPT_LONG_TRUE@check: all
 @HAVE_GETOPT_LONG_TRUE@	test "`./$(PACKAGE) --version`" = "$(PACKAGE) $(VERSION)"
 @HAVE_GETOPT_LONG_TRUE@	./$(PACKAGE) --version >& /dev/null
 @HAVE_GETOPT_LONG_TRUE@	./$(PACKAGE) --help >& /dev/null
+@HAVE_GETOPT_LONG_TRUE@	test "`./$(PACKAGE)-server --version`" = "$(PACKAGE)-server ($(PACKAGE) $(VERSION))"
+@HAVE_GETOPT_LONG_TRUE@	./$(PACKAGE)-server --version >& /dev/null
+@HAVE_GETOPT_LONG_TRUE@	./$(PACKAGE)-server --help >& /dev/null
 
 run: all check
 	PKGSOUNDDIR=$(srcdir)/sounds ./$(PACKAGE)

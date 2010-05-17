@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
 aclocal -I macros -I /usr/share/aclocal $ACLOCAL_FLAGS
+libtoolize --automake --force --copy
 automake --add-missing --copy
 autoconf

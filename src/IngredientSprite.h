@@ -1,8 +1,8 @@
-/*  $Id: IngredientSprite.h,v 1.10 2009/02/27 02:50:42 sarrazip Exp $
+/*  $Id: IngredientSprite.h,v 1.9.2.2 2010/05/16 02:25:48 sarrazip Exp $
     IngredientSprite.h - Sprite that is part of an "ingredient"
 
     burgerspace - A hamburger-smashing video game.
-    Copyright (C) 2001-2009 Pierre Sarrazin <http://sarrazip.com/>
+    Copyright (C) 2001-2007 Pierre Sarrazin <http://sarrazip.com/>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -41,15 +41,15 @@ public:
     enum { LOWERING_DISTANCE = 4 };
 
     IngredientSprite(const flatzebra::PixmapArray &pixmapArray,
-			const flatzebra::Couple &pos,
-			IngredientGroup *ig) throw(int)
+                        const flatzebra::Couple &pos,
+                        IngredientGroup *ig) throw(int)
       : flatzebra::Sprite(pixmapArray, pos,
-		flatzebra::Couple(0, 0), flatzebra::Couple(0, 0),
-		flatzebra::Couple(0, 5), flatzebra::Couple(24, 1)),
-	myGroup(ig),
-	lowered(false)
+                flatzebra::Couple(0, 0), flatzebra::Couple(0, 0),
+                flatzebra::Couple(0, 5), flatzebra::Couple(24, 1)),
+        myGroup(ig),
+        lowered(false)
     {
-	assert(ig != NULL);
+        assert(ig != NULL);
     }
 
     IngredientGroup *getGroup() const { return myGroup; }
@@ -64,6 +64,10 @@ private:
 
     IngredientGroup *myGroup;
     bool lowered;
+
+    // Forbidden operations:
+    IngredientSprite(const IngredientSprite &);
+    IngredientSprite &operator = (const IngredientSprite &);
 
 };
 

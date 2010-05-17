@@ -1107,3 +1107,8 @@ AC_SUBST([am__untar])
 
 m4_include([macros/ac_compile_warnings.m4])
 m4_include([macros/getopt_long.m4])
+m4_include([macros/libtool.m4])
+m4_include([macros/ltoptions.m4])
+m4_include([macros/ltsugar.m4])
+m4_include([macros/ltversion.m4])
+m4_include([macros/lt~obsolete.m4])

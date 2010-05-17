@@ -1,0 +1,90 @@
+.\" $Id: burgerspace-server.6.in,v 1.1.2.3 2009/06/21 23:38:55 sarrazip Exp $
+.\" BurgerSpace server manual page
+.\"
+.\" burgerspace-server - UDP server for networked BurgerSpace
+.\" Copyright (C) 2007-2009 Pierre Sarrazin <http://sarrazip.com/>
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License
+.\" as published by the Free Software Foundation; either version 2
+.\" of the License, or (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+.\" 02110-1301, USA.
+.\"
+.\"
+.TH @PACKAGE@-server "6" "@MANUAL_DATE_EN@" "" ""
+.SH NAME
+@PACKAGE@-server \- UDP server for the networked version of @PACKAGE_FULL_NAME@
+.SH SYNOPSIS
+.B @PACKAGE@-server
+.SH DESCRIPTION
+.PP
+\fB@PACKAGE@-server\fR
+is a server that accepts connections from @PACKAGE_FULL_NAME@ clients 
+to allow two players to compete with each other. One player controls the
+chef and the other controls the egg. Other clients can connect as
+spectators.
+.PP
+@PACKAGE@-server should be started in a terminal. To terminate it,
+give the Ctrl-C sequence or use the kill(1) command with the server's
+process ID as the argument.
+.PP
+The connections use the UDP protocol. The \fB--port\fR option can be
+used to specify a non-default listening port (see below).
+.PP
+After the server has started, the user who wants to control the chef
+must start the client with this command:
+.PP
+@PACKAGE@ --server=the.server.hostname.com --chef
+.PP
+Use the appropriate hostname or IP address as the argument for --server.
+The user who wants to control the egg must give the --enemy option instead
+of --chef.
+The --port option can be added to the @PACKAGE@ command-line to specify
+the server port, if the server was started with a non-default UDP listening
+port.
+.PP
+.SH OPTIONS
+.PP
+.TP
+\fB\-\-help\fR
+display a help page and exit
+.TP
+\fB\-\-version\fR
+display version information and exit
+.TP
+\fB\-\-initial\-level=N\fR
+start game at level N.  Default is 1.  N must be at least 1.
+.TP
+\fB\-\-port=PORT\fR
+UDP port number on which the server must listen for incoming clients.
+The default is @DEFAULT_UDP_SERVER_PORT@.
+.SH LICENSE
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License.  This program has absolutely no warranty.
+.SH AUTHORS
+Pierre Sarrazin (code)
+.br
+Luce St-Amand (most images)
+.SH FILES
+This program uses the
+\fBflatzebra\fR library, by the same author.
+This library is itself based on the SDL graphics library
+(see http://www.libsdl.org).
+.PP
+See the @PACKAGE_FULL_NAME@ Home Page:
+.br
+http://sarrazip.com/dev/@PACKAGE@.html
+.SH BUGS
+Performance has not been tested thoroughly.
+Users who want to play the stable stand-alone game should use version 1.8.3.
+.SH SEE ALSO
+@PACKAGE@(6)

@@ -20,14 +20,14 @@
 .\" 02110-1301, USA.
 .\"
 .\"
-.TH burgerspace "6" "May 16th, 2010" "" ""
+.TH @PACKAGE@ "6" "@MANUAL_DATE_EN@" "" ""
 .SH NAME
-burgerspace \- A hamburger-smashing video game
+@PACKAGE@ \- @PACKAGE_SUMMARY_EN@
 .SH SYNOPSIS
-.B burgerspace
+.B @PACKAGE@
 .SH DESCRIPTION
 .PP
-\fBBurgerSpace\fR
+\fB@PACKAGE_FULL_NAME@\fR
 is a game where you are a chef and you must walk over hamburger
 ingredients (buns, meat, lettuce, tomatoes, cheese) to make them fall
 from floor to floor, until they end up in the plates at the bottom of
@@ -47,9 +47,9 @@ have a limited number of them.  Pick up the treat that appears
 from time to time to obtain a new pepper shot.
 .PP
 A two-player game is possible using the (experimental)
-networked version of BurgerSpace.
-See the burgerspace-server(6) manual page or
-the BurgerSpace Home Page for details.
+networked version of @PACKAGE_FULL_NAME@.
+See the @PACKAGE@-server(6) manual page or
+the @PACKAGE_FULL_NAME@ Home Page for details.
 .PP
 Use the \fBEscape key\fR to quit the program.
 To pause the game (which is only possible in stand-alone mode),
@@ -88,16 +88,16 @@ Minimum is 1.  Maximum is 1000.  50 means 20 frames per second.
 .PP
 .TP
 \fB\-\-server=HOSTNAME\fR
-Start as a client that connects to a BurgerSpace server running
+Start as a client that connects to a @PACKAGE_FULL_NAME@ server running
 on the given host or IP address.
 Examples: --server=localhost, --server=192.168.1.2
 If this option is not given, the program starts as a stand-alone game
 that does not try to connect to any server.
 .TP
 \fB\-\-port=PORT\fR
-UDP port number on which the BurgerSpace server is running.
+UDP port number on which the @PACKAGE_FULL_NAME@ server is running.
 This option is only useful with --server.
-The default is 49152.
+The default is @DEFAULT_UDP_SERVER_PORT@.
 .SH LICENSE
 This program is free software; you may redistribute it under the terms of
 the GNU General Public License version 2 or any later version.
@@ -112,6 +112,6 @@ This program uses the
 This library is itself based on the SDL graphics library
 (see http://www.libsdl.org).
 .PP
-See the BurgerSpace Home Page:
+See the @PACKAGE_FULL_NAME@ Home Page:
 .br
-http://sarrazip.com/dev/burgerspace.html
+http://sarrazip.com/dev/@PACKAGE@.html

@@ -1,8 +1,8 @@
-# $Id: Makefile.am,v 1.13 2007/12/25 07:06:25 sarrazip Exp $
+# $Id: Makefile.am,v 1.13.2.1 2009/06/21 02:02:34 sarrazip Exp $
 
 SUBDIRS = src
 
-man_MANS = doc/burgerspace.6
+man_MANS = doc/burgerspace.6 doc/burgerspace-server.6
 
 docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
 doc_DATA = \

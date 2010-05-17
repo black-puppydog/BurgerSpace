@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=BurgerSpace
 Categories=X-Red-Hat-Base;Application;Game;ArcadeGame;
-Comment=BurgerTime clone
-Comment[fr]=Clone de BurgerTime
+Comment=A hamburger-smashing video game
+Comment[fr]=Un jeu de hamburgers qu'on écrase
 Exec=burgerspace
 Icon=burgerspace.png
 Terminal=0
