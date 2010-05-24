@@ -55,7 +55,12 @@ libcore_la_SOURCES = \
 	EnemySprite.cpp \
 	EnemySprite.h \
 	util.h \
-	pixmaps.h
+	pixmaps.h \
+	Level.h \
+	Level.cpp \
+	LevelSet.cpp \
+	LevelSet.h \
+	Helpers.h
 
 libcore_la_LIBADD = \
 	$(FLATZEBRA_LIBS)

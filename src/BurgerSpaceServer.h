@@ -26,6 +26,8 @@
 #include "IngredientGroup.h"
 #include "IngredientSprite.h"
 #include "Controller.h"
+#include "LevelSet.h"
+#include "Level.h"
 
 #include <flatzebra/GameEngine.h>
 #include <flatzebra/Sprite.h>
@@ -34,7 +36,6 @@
 
 #include <string>
 #include <iostream>
-
 
 class BurgerSpaceServerInterface
 {
@@ -160,71 +161,10 @@ private:
     //
     //
 
-    struct IntPair
-    {
-        int first, second;
-    };
-
-
-    struct IntQuad
-    {
-        int first, second, third, fourth;
-    };
-
 
 public:
-
-    class Level
-    {
-    public:
-        Level();
-        ~Level();
-
-        void init(int no, int nCols, int nRows, flatzebra::Couple posInPixels);
-        void setLevelNo(int no);
-        int  getLevelNo() const;
-        void setTileMatrixEntry(int colNo, int rowNo,
-                                const char **xpm, SDL_Surface *pixmap);
-        SDL_Surface **getTileMatrixRow(int rowNo);
-        const char **getXPMAtPixel(flatzebra::Couple pos) const;
-
-        void setTextDescription(const std::string &desc);
-        std::string getTextDescription() const;
-
-    public:
-        flatzebra::Couple sizeInTiles;
-        flatzebra::Couple sizeInPixels;
-        flatzebra::Couple positionInPixels;
-
-    private:
-        int levelNo;
-        const char ***xpmMatrix;   // array of 'const char **' pointers
-        SDL_Surface **tileMatrix;  // array of X11 pixmaps
-        std::string desc;  // see BurgerSpaceServer::loadLevel()
-
-        // Forbidden operations:
-        Level(const Level &);
-        Level &operator = (const Level &);
-    };
-
+    
 protected:
-
-    class IngInit
-    {
-    public:
-        enum IngType
-        {
-            BOTTOM_BUN, MEAT, LETTUCE, RED_STUFF, YELLOW_STUFF, TOP_BUN
-
-            /*        The red stuff is a slice of tomato, and the yellow stuff
-                is cheese.  This was not known at the time when this
-                enumeration was defined...
-            */
-        };
-
-        int xInitTile, yInitTile, yTargetTile, rank;
-        IngType type;
-    };
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -233,34 +173,14 @@ protected:
     //
     //
 
-    static const char
-        *levelDescriptor1[],
-        *levelDescriptor2[],
-        *levelDescriptor3[],
-        *levelDescriptor4[],
-        *levelDescriptor5[],
-        *levelDescriptor6[];
-
-    static const char **levelDescriptorTable[];
-
-    static const IngInit
-        tableIngredientsLevel1[],
-        tableIngredientsLevel2[],
-        tableIngredientsLevel3[],
-        tableIngredientsLevel4[],
-        tableIngredientsLevel5[],
-        tableIngredientsLevel6[];
-
-    static const IngInit *tableOfTablesOfIngredientsLevel[];
-
-    static const IntQuad enemyStartingHeights[];
-    static const IntPair playerStartingPos[];
-
-
     flatzebra::Couple theScreenSizeInPixels;
 
     int initLevelNo;  // level number at which play starts
     int cumulLevelNo;
+
+
+    LevelSet * levelSet;
+    LevelDescription * theCurrentLevelDescription;
 
     enum RequestType { NO_REQUEST, START_GAME_REQUEST, PAUSE_REQUEST, RESUME_REQUEST };
 
@@ -343,6 +263,8 @@ protected:
     //  IMPLEMENTATION FUNCTIONS
     //
     //
+    
+    
     void chooseDirectionAmongMany(bool directions[4]) const;
     int  chooseDirectionTowardTarget(
                             flatzebra::Couple startPos, flatzebra::Couple targetPos, int speedFactor,
@@ -373,6 +295,7 @@ protected:
                         const flatzebra::Couple groupPos, const flatzebra::Couple groupSize,
                         const flatzebra::Sprite &s) const;
     void loadLevel(int levelNo) throw(std::string);
+    void loadLevelDescription(int);
     void displayErrorMessage(const std::string &msg) throw();
     void initializeSprites() throw(flatzebra::PixmapLoadError);
     void initializeMisc() throw(std::string);

@@ -113,7 +113,7 @@ private:
     bool showRole;
     flatzebra::Couple roleAreaPos;
     flatzebra::Couple roleAreaSize;
-    BurgerSpaceServer::Level theCurrentLevel;
+    Level theCurrentLevel;
     SDL_Surface *tilePixmaps[5];
     flatzebra::PixmapArray playerPA;
     flatzebra::PixmapArray pepperPA;

@@ -40,6 +40,9 @@
 
 #include "pixmaps.h"
 
+#include "LevelSet.h"
+#include "Helpers.h"
+
 using namespace std;
 using namespace flatzebra;
 
@@ -64,7 +67,6 @@ static const int
     ENEMY_SPEED_FACTOR = 3,
     SCORE_TTL = 20,
     NUM_INIT_LIVES = 3,
-    NUM_LEVELS = 6,
     CORNER_TURN_TOLERANCE = 8;
 
 
@@ -177,560 +179,6 @@ getDirectionName(int d)
     }
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-//
-// STATIC DATA MEMBERS
-//
-
-
-/*static*/
-const char *
-BurgerSpaceServer::levelDescriptor1[] =
-// Description of the first level's setting.
-{
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeetffftftftffftfffteee",
-    "eeeleeeleleleeeleeeleee",
-    "eeefftfteletftftfffteee",
-    "eeeeeletfffteleleeeleee",
-    "eeetftfteeeleletftffeee",
-    "eeeleletffftfffteleeeee",
-    "eeeleleleeeleeetftfteee",
-    "eeetffftffftfffteleleee",
-    "eeeleeeleeeleeeleleleee",
-    "eeefffffffffffffffffeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeepppepppepppepppeeee",
-    NULL  // marks the end
-};
-
-
-/*static*/
-const BurgerSpaceServer::IngInit
-BurgerSpaceServer::tableIngredientsLevel1[] =
-{
-    // 1st column:
-    {  4, 11, 15,  1, IngInit::BOTTOM_BUN },
-    {  4,  9, 15,  2, IngInit::MEAT       },
-    {  4,  6, 15,  3, IngInit::LETTUCE    },
-    {  4,  4, 15,  4, IngInit::TOP_BUN    },
-
-    // 2nd column:
-    {  8, 11, 15,  1, IngInit::BOTTOM_BUN },
-    {  8,  9, 15,  2, IngInit::MEAT       },
-    {  8,  7, 15,  3, IngInit::LETTUCE    },
-    {  8,  2, 15,  4, IngInit::TOP_BUN    },
-
-    // 3rd column:
-    { 12, 11, 15,  1, IngInit::BOTTOM_BUN },
-    { 12,  7, 15,  2, IngInit::MEAT       },
-    { 12,  4, 15,  3, IngInit::LETTUCE    },
-    { 12,  2, 15,  4, IngInit::TOP_BUN    },
-
-    // 4th column:
-    { 16,  8, 15,  1, IngInit::BOTTOM_BUN },
-    { 16,  6, 15,  2, IngInit::MEAT       },
-    { 16,  4, 15,  3, IngInit::LETTUCE    },
-    { 16,  2, 15,  4, IngInit::TOP_BUN    },
-
-    {  0,  0,  0,  0, IngInit::BOTTOM_BUN }  // rank zero marks the end
-};
-
-
-const char *
-BurgerSpaceServer::levelDescriptor2[] =
-// Description of the second level's setting.
-{
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeetftftftftftftftfteee",
-    "eeetftftftfteleleleleee",
-    "eeetftfteletftftftfteee",
-    "eeeleletftfteletftfteee",
-    "eeefffffftftftffffffeee",
-    "eeeeeeeeeletftffeeeeeee",
-    "eeeeeeefftfteleeeeeeeee",
-    "eeeeeeeeeletftffeeeeeee",
-    "eeeeeeefffftffffeeeeeee",
-    "eeeepppeeeeleeeepppeeee",
-    "eeeeeeeeeeefeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeepppepppeeeeeeee",
-    NULL  // marks the end
-};
-
-
-/*static*/ const BurgerSpaceServer::IngInit
-BurgerSpaceServer::tableIngredientsLevel2[] =
-{
-    // 1st column:
-    {  4,  6, 11,  1, IngInit::BOTTOM_BUN },
-    {  4,  4, 11,  2, IngInit::MEAT       },
-    {  4,  3, 11,  3, IngInit::LETTUCE    },
-    {  4,  2, 11,  4, IngInit::TOP_BUN    },
-
-    // 2nd column:
-    {  8, 10, 15,  1, IngInit::BOTTOM_BUN },
-    {  8,  5, 15,  2, IngInit::MEAT       },
-    {  8,  3, 15,  3, IngInit::LETTUCE    },
-    {  8,  2, 15,  4, IngInit::TOP_BUN    },
-
-    // 3rd column:
-    { 12, 10, 15,  1, IngInit::BOTTOM_BUN },
-    { 12,  9, 15,  2, IngInit::MEAT       },
-    { 12,  7, 15,  3, IngInit::LETTUCE    },
-    { 12,  2, 15,  4, IngInit::TOP_BUN    },
-
-    // 4th column:
-    { 16,  6, 11,  1, IngInit::BOTTOM_BUN },
-    { 16,  5, 11,  2, IngInit::MEAT       },
-    { 16,  4, 11,  3, IngInit::LETTUCE    },
-    { 16,  2, 11,  4, IngInit::TOP_BUN    },
-
-    {  0,  0,  0,  0, IngInit::BOTTOM_BUN }  // rank zero marks the end
-};
-
-
-const char *
-BurgerSpaceServer::levelDescriptor3[] =
-// Description of the second level's setting.
-{
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeetffftftffftfffffteee",
-    "eeetffftffftffftfffteee",
-    "eeetffffftfteeetfffteee",
-    "eeefffftftftftffffffeee",
-    "eeeeeeeteletfffteeeeeee",
-    "eeeeeeetfffffffteeeeeee",
-    "eeeepppleeeeeeelpppeeee",
-    "eeetftfteeeeeeetfffteee",
-    "eeetfffteeeeeeetftfteee",
-    "eeefffftpppeppptffffeee",
-    "eeeeeeetftftftfteeeeeee",
-    "eeeeeeefffffffffeeeeeee",
-    "eeeepppeeeeeeeeepppeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    NULL  // marks the end
-};
-
-
-/*static*/ const BurgerSpaceServer::IngInit
-BurgerSpaceServer::tableIngredientsLevel3[] =
-{
-    // 1st column, upper hamburger:
-    {  4,  5,  8,  1, IngInit::BOTTOM_BUN },
-    {  4,  4,  8,  2, IngInit::MEAT       },
-    {  4,  2,  8,  3, IngInit::TOP_BUN    },
-
-    // 1st column, lower hamburger:
-    {  4, 11, 14,  1, IngInit::BOTTOM_BUN },
-    {  4, 10, 14,  2, IngInit::MEAT       },
-    {  4,  9, 14,  3, IngInit::TOP_BUN    },
-
-    // 2nd column:
-    {  8,  5, 11,  1, IngInit::BOTTOM_BUN },
-    {  8,  3, 11,  2, IngInit::MEAT       },
-    {  8,  2, 11,  3, IngInit::TOP_BUN    },
-
-    // 3rd column:
-    { 12,  5, 11,  1, IngInit::BOTTOM_BUN },
-    { 12,  3, 11,  2, IngInit::MEAT       },
-    { 12,  2, 11,  3, IngInit::TOP_BUN    },
-
-    // 4th column, upper hamburger:
-    { 16,  5,  8,  1, IngInit::BOTTOM_BUN },
-    { 16,  4,  8,  2, IngInit::MEAT       },
-    { 16,  2,  8,  3, IngInit::TOP_BUN    },
-
-    // 4th column, lower hamburger:
-    { 16, 11, 14,  1, IngInit::BOTTOM_BUN },
-    { 16, 10, 14,  2, IngInit::MEAT       },
-    { 16,  9, 14,  3, IngInit::TOP_BUN    },
-
-    {  0,  0,  0,  0, IngInit::BOTTOM_BUN }  // rank zero marks the end
-};
-
-
-const char *
-BurgerSpaceServer::levelDescriptor4[] =
-// Description of the second level's setting.
-{
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeetffftffftffftfffteee",
-    "eeefftffftffftffftffeee",
-    "eeetffftffftffftfffteee",
-    "eeefftffftftftffftffeee",
-    "eeetffftffftffftfffteee",
-    "eeetftffftffftffftfteee",
-    "eeetffftffftffftfffteee",
-    "eeefffffffffffffffffeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeepppepppepppepppeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    NULL  // marks the end
-};
-
-
-/*static*/ const BurgerSpaceServer::IngInit
-BurgerSpaceServer::tableIngredientsLevel4[] =
-{
-    // 1st column:
-    {  4,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    {  4,  8, 14,  2, IngInit::RED_STUFF    },
-    {  4,  7, 14,  3, IngInit::LETTUCE      },
-    {  4,  6, 14,  4, IngInit::MEAT         },
-    {  4,  5, 14,  5, IngInit::LETTUCE      },
-    {  4,  4, 14,  6, IngInit::RED_STUFF    },
-    {  4,  3, 14,  7, IngInit::YELLOW_STUFF },
-    {  4,  2, 14,  8, IngInit::TOP_BUN      },
-
-    // 2nd column:
-    {  8,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    {  8,  8, 14,  2, IngInit::LETTUCE      },
-    {  8,  7, 14,  3, IngInit::YELLOW_STUFF },
-    {  8,  6, 14,  4, IngInit::RED_STUFF    },
-    {  8,  5, 14,  5, IngInit::MEAT         },
-    {  8,  4, 14,  6, IngInit::RED_STUFF    },
-    {  8,  3, 14,  7, IngInit::LETTUCE      },
-    {  8,  2, 14,  8, IngInit::TOP_BUN      },
-
-    // 3rd column:
-    { 12,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    { 12,  8, 14,  2, IngInit::LETTUCE      },
-    { 12,  7, 14,  3, IngInit::YELLOW_STUFF },
-    { 12,  6, 14,  4, IngInit::MEAT         },
-    { 12,  5, 14,  5, IngInit::RED_STUFF    },
-    { 12,  4, 14,  6, IngInit::LETTUCE      },
-    { 12,  3, 14,  7, IngInit::RED_STUFF    },
-    { 12,  2, 14,  8, IngInit::TOP_BUN      },
-
-    // 4th column:
-    { 16,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    { 16,  8, 14,  2, IngInit::RED_STUFF    },
-    { 16,  7, 14,  3, IngInit::LETTUCE      },
-    { 16,  6, 14,  4, IngInit::RED_STUFF    },
-    { 16,  5, 14,  5, IngInit::MEAT         },
-    { 16,  4, 14,  6, IngInit::LETTUCE      },
-    { 16,  3, 14,  7, IngInit::YELLOW_STUFF },
-    { 16,  2, 14,  8, IngInit::TOP_BUN      },
-
-    {  0,  0,  0,  0, IngInit::BOTTOM_BUN }  // rank zero marks the end
-};
-
-
-const char *
-BurgerSpaceServer::levelDescriptor5[] =
-// Description of the second level's setting.
-{
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeetffffffffffffftfteee",
-    "eeefffffffftffftftfteee",
-    "eeetffffffffffffeleleee",
-    "eeetfffffffffffteleleee",
-    "eeetffftffffffffftfteee",
-    "eeetfffffffffffteleleee",
-    "eeetfffffffffffteleleee",
-    "eeetffffffffffffeleleee",
-    "eeeleeeeeeeeeeetfffteee",
-    "eeeleeeeeeeeeeeleeeleee",
-    "eeeleeeeeeeeeeeleeeleee",
-    "eeefeeeeeeeeeeefffffeee",
-    "eeeeeeeepppepppeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    NULL  // marks the end
-};
-
-
-/*static*/ const BurgerSpaceServer::IngInit
-BurgerSpaceServer::tableIngredientsLevel5[] =
-{
-    // 1st column:
-    {  8,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    {  8,  8, 14,  2, IngInit::RED_STUFF    },
-    {  8,  7, 14,  3, IngInit::MEAT         },
-    {  8,  6, 14,  4, IngInit::LETTUCE      },
-    {  8,  5, 14,  5, IngInit::MEAT         },
-    {  8,  4, 14,  6, IngInit::LETTUCE      },
-    {  8,  3, 14,  7, IngInit::RED_STUFF    },
-    {  8,  2, 14,  8, IngInit::TOP_BUN      },
-
-    // 2nd column:
-    { 12,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    { 12,  8, 14,  2, IngInit::LETTUCE      },
-    { 12,  7, 14,  3, IngInit::RED_STUFF    },
-    { 12,  6, 14,  4, IngInit::MEAT         },
-    { 12,  5, 14,  5, IngInit::LETTUCE      },
-    { 12,  4, 14,  6, IngInit::MEAT         },
-    { 12,  3, 14,  7, IngInit::RED_STUFF    },
-    { 12,  2, 14,  8, IngInit::TOP_BUN      },
-
-    {  0,  0,  0,  0, IngInit::BOTTOM_BUN }  // rank zero marks the end
-};
-
-
-const char *
-BurgerSpaceServer::levelDescriptor6[] =
-// Description of the second level's setting.
-{
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeetftffeeetffffeee",
-    "eeefffftelefftffeeeeeee",
-    "eeeeeeetftfteletffffeee",
-    "eeefffffeletfffteeeeeee",
-    "eeeeeeetfffteeetffffeee",
-    "eeeffffteeefftffeeeeeee",
-    "eeeeeeetftfteletffffeee",
-    "eeefffffelefftfteeeeeee",
-    "eeeeeeetfffteletffffeee",
-    "eeefffffeeefffffeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    "eeeepppepppepppepppeeee",
-    "eeeeeeeeeeeeeeeeeeeeeee",
-    NULL  // marks the end
-};
-
-
-/*static*/ const BurgerSpaceServer::IngInit
-BurgerSpaceServer::tableIngredientsLevel6[] =
-{
-    // 1st column:
-    {  4,  9, 14,  1, IngInit::BOTTOM_BUN   },
-    {  4,  7, 14,  2, IngInit::MEAT         },
-    {  4,  5, 14,  3, IngInit::YELLOW_STUFF },
-    {  4,  3, 14,  4, IngInit::TOP_BUN      },
-
-    // 2nd column:
-    {  8, 10, 14,  1, IngInit::BOTTOM_BUN   },
-    {  8,  8, 14,  2, IngInit::YELLOW_STUFF },
-    {  8,  6, 14,  3, IngInit::MEAT         },
-    {  8,  4, 14,  4, IngInit::YELLOW_STUFF },
-    {  8,  2, 14,  5, IngInit::TOP_BUN      },
-
-    // 3rd column:
-    { 12, 11, 14,  1, IngInit::BOTTOM_BUN   },
-    { 12,  9, 14,  2, IngInit::MEAT         },
-    { 12,  7, 14,  3, IngInit::YELLOW_STUFF },
-    { 12,  5, 14,  4, IngInit::YELLOW_STUFF },
-    { 12,  3, 14,  5, IngInit::TOP_BUN      },
-
-    // 4th column:
-    { 16,  8, 14,  1, IngInit::BOTTOM_BUN   },
-    { 16,  6, 14,  2, IngInit::MEAT         },
-    { 16,  4, 14,  3, IngInit::YELLOW_STUFF },
-    { 16,  2, 14,  4, IngInit::TOP_BUN      },
-
-    {  0,  0,  0,  0, IngInit::BOTTOM_BUN }  // rank zero marks the end
-};
-
-
-
-const char **
-BurgerSpaceServer::levelDescriptorTable[] =
-{
-    0,  // unused
-    levelDescriptor1,  // cheap system, indeed
-    levelDescriptor2,
-    levelDescriptor3,
-    levelDescriptor4,
-    levelDescriptor5,
-    levelDescriptor6,
-    0,  // safety padding
-    0,  // safety padding
-    0,  // safety padding
-    0,  // safety padding
-};
-
-
-
-const BurgerSpaceServer::IngInit *
-BurgerSpaceServer::tableOfTablesOfIngredientsLevel[] =
-{
-    NULL,  // unused
-    tableIngredientsLevel1,
-    tableIngredientsLevel2,
-    tableIngredientsLevel3,
-    tableIngredientsLevel4,
-    tableIngredientsLevel5,
-    tableIngredientsLevel6,
-    NULL,  // safety padding
-    NULL,  // safety padding
-    NULL,  // safety padding
-    NULL,  // safety padding
-};
-
-
-const BurgerSpaceServer::IntQuad
-BurgerSpaceServer::enemyStartingHeights[] =
-/*  The component at index L (>= 1) has 4 integer elements:
-    'first' and 'second' are heights in tiles where the enemies can appear
-    when at level L, and coming from the left.
-    'third' and 'fourth' are heights in tiles where the enemies can appear
-    when at level L, and coming from the right.
-*/
-{
-    {  0,  0,  0,  0 },  // index 0 not used
-    {  2, 11,  2, 11 },  // level 1
-    {  2,  6,  2,  6 },  // level 2
-    {  2, 11,  2, 11 },  // level 3
-    {  2,  9,  2,  9 },  // level 4
-    {  2, 13,  2, 13 },  // level 5
-    {  3, 11,  2, 10 },  // level 6
-    {  0,  0,  0,  0 },  // safety padding
-    {  0,  0,  0,  0 },  // safety padding
-    {  0,  0,  0,  0 },  // safety padding
-    {  0,  0,  0,  0 },  // safety padding
-};
-
-
-const BurgerSpaceServer::IntPair
-BurgerSpaceServer::playerStartingPos[] =
-{
-    { 11,  0 },  // index 0 not used
-    { 11, 11 },  // level 1
-    { 11, 12 },  // level 2
-    { 11, 13 },  // level 3
-    { 11,  9 },  // level 4
-    { 15, 13 },  // level 5
-    { 11, 11 },  // level 6
-    {  0,  0 },  // safety padding
-    {  0,  0 },  // safety padding
-    {  0,  0 },  // safety padding
-    {  0,  0 },  // safety padding
-};
-
-
-///////////////////////////////////////////////////////////////////////////////
-
-
-BurgerSpaceServer::Level::Level()
-:   sizeInTiles(),
-    sizeInPixels(),
-    positionInPixels(),
-    levelNo(1),
-    xpmMatrix(NULL),
-    tileMatrix(NULL),
-    desc()
-{
-}
-
-
-BurgerSpaceServer::Level::~Level()
-{
-    // NOTE:  We do not free the pixmaps.  The program is dying anyway.
-
-    delete [] xpmMatrix;
-    delete [] tileMatrix;
-}
-
-
-void
-BurgerSpaceServer::Level::init(int no, int nCols, int nRows, Couple posInPixels)
-/*  nCols and nRows must be the number of columns and rows
-    of _tiles_, not of pixels.
-    posInPixels must be the offset in pixels from the origin
-    of the drawing pixmap.
-*/
-{
-    assert(no > 0);
-    assert(nCols > 0);
-    assert(nRows > 0);
-
-    levelNo = no;
-
-    sizeInTiles = Couple(nCols, nRows);
-    sizeInPixels = sizeInTiles * TILE_SIDE;
-
-    positionInPixels = posInPixels;
-
-    delete [] xpmMatrix;
-    xpmMatrix = new const char **[nRows * nCols];
-    memset(xpmMatrix, 0, nRows * nCols * sizeof(const char **));
-
-    delete [] tileMatrix;
-    tileMatrix = new SDL_Surface *[nRows * nCols];
-    memset(tileMatrix, 0, nRows * nCols * sizeof(SDL_Surface *));
-}
-
-
-void
-BurgerSpaceServer::Level::setLevelNo(int no)
-{
-    assert(no >= 1);
-    levelNo = no;
-}
-
-
-int
-BurgerSpaceServer::Level::getLevelNo() const
-{
-    assert(levelNo >= 1);
-    return levelNo;
-}
-
-
-void
-BurgerSpaceServer::Level::setTileMatrixEntry(int colNo, int rowNo,
-                                        const char **xpm, SDL_Surface *pixmap)
-{
-    assert(colNo < sizeInTiles.x);
-    assert(rowNo < sizeInTiles.y);
-
-    xpmMatrix[rowNo * sizeInTiles.x + colNo] = xpm;
-    tileMatrix[rowNo * sizeInTiles.x + colNo] = pixmap;
-}
-
-
-SDL_Surface **
-BurgerSpaceServer::Level::getTileMatrixRow(int rowNo)
-{
-    return &tileMatrix[rowNo * sizeInTiles.x];
-}
-
-
-const char **
-BurgerSpaceServer::Level::getXPMAtPixel(Couple pos) const
-/*  Returns a pointer to the XPM variable that corresponds to
-    the tile that contains the pixels at 'pos'.
-    Returns NULL if 'pos' is in no tile.
-*/
-{
-    pos -= positionInPixels;
-    if (pos.x < 0 || pos.x >= sizeInPixels.x ||
-            pos.y < 0 || pos.y >= sizeInPixels.y)
-        return NULL;
-
-    pos /= TILE_SIDE;
-    return xpmMatrix[pos.y * sizeInTiles.x + pos.x];
-}
-
-
-void
-BurgerSpaceServer::Level::setTextDescription(const string &desc)
-{
-    this->desc = desc;
-}
-
-
-string
-BurgerSpaceServer::Level::getTextDescription() const
-{
-    return desc;
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -788,12 +236,12 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
 
     numLives(0),
     numAvailablePeppers(0),
-
     theCurrentLevel()
 {
     assert(initLevelNumber >= 1);
     initLevelNo = initLevelNumber;
     cumulLevelNo = initLevelNo;
+    initNextLevel(cumulLevelNo);
 
     desiredDirs[RIGHT] =
     desiredDirs[UP] =
@@ -871,9 +319,9 @@ BurgerSpaceServer::initializeSprites() throw(PixmapLoadError)
     deleteSprite(playerSprite);
     Couple playerSize = playerPA.getImageSize();
     assert(playerSize.isNonZero());
-    int sx = playerStartingPos[theCurrentLevel.getLevelNo()].first;
+    int sx = theCurrentLevelDescription->playerStartingPosition.first;
     assert(sx != 0);
-    int sy = playerStartingPos[theCurrentLevel.getLevelNo()].second;
+    int sy = theCurrentLevelDescription->playerStartingPosition.second;
     assert(sy != 0);
     initPlayerPos = theCurrentLevel.positionInPixels +
                 Couple(sx * TILE_SIDE + 1, sy * TILE_SIDE - playerSize.y);
@@ -891,8 +339,8 @@ BurgerSpaceServer::initializeSprites() throw(PixmapLoadError)
     ingredientGroups.clear();
 
     const Couple size = bottomBunPA.getImageSize();
-    const IngInit *tableIngredients =
-                tableOfTablesOfIngredientsLevel[theCurrentLevel.getLevelNo()];
+    IngInit *tableIngredients =
+    		theCurrentLevelDescription->tableOfIngredients;
     assert(tableIngredients != NULL);
 
     numHamburgersToDo = 0;
@@ -1177,6 +625,7 @@ BurgerSpaceServer::initNextLevel(int levelNo /*= 0*/) throw(int)
             cumulLevelNo++;
         else
             cumulLevelNo = levelNo;
+        loadLevelDescription(cumulLevelNo);
         loadLevel(cumulLevelNo);
         initializeSprites();
         initTimeForTreat();
@@ -1736,7 +1185,7 @@ BurgerSpaceServer::animateAutomaticCharacters()
         schedule the creation of another one some time in the near future.
     */
     size_t totalNumEnemies = enemySprites.size();
-    const size_t requiredNumEnemies = 6 + 3 * ((cumulLevelNo - 1) / NUM_LEVELS);
+    size_t requiredNumEnemies = 6 + 3 * ((cumulLevelNo - 1) / levelSet->getNumLevels());
     if (totalNumEnemies < requiredNumEnemies && timeForNewEnemy == 0)
         timeForNewEnemy = tickCount + 40;
 
@@ -1749,7 +1198,7 @@ BurgerSpaceServer::animateAutomaticCharacters()
         timeForNewEnemy = 0;
 
         assert(theCurrentLevel.getLevelNo() >= 1);
-        const IntQuad &sh = enemyStartingHeights[theCurrentLevel.getLevelNo()];
+        IntQuad sh = theCurrentLevelDescription->enemyStartingHeights;
         assert(sh.first != 0 && sh.second != 0 &&
                     sh.third != 0 && sh.fourth != 0);
 
@@ -2818,6 +2267,14 @@ BurgerSpaceServer::loadPixmaps() throw(PixmapLoadError)
     loadPixmap(digit9_xpm, digitPA, 9);
 }
 
+void 
+BurgerSpaceServer::loadLevelDescription(int levelNumber)
+/* loads all data needed to initialize a level */
+{
+	cout << "loading level description of level no. " << levelNumber << endl;
+	theCurrentLevelDescription = levelSet->getLevelDescription(levelNumber);
+}
+
 
 void
 BurgerSpaceServer::loadLevel(int levelNo) throw(string)
@@ -2830,9 +2287,9 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
 {
     //cout << "BurgerSpaceServer::loadLevel(" << levelNo << ")" << endl;
 
-    levelNo = (levelNo - 1) % NUM_LEVELS + 1;
+    levelNo = (levelNo - 1) % levelSet->getNumLevels() + 1;
 
-    const char **levelDesc = levelDescriptorTable[levelNo];
+    const char ** levelDesc = theCurrentLevelDescription->LineStrings;
     assert(levelDesc != NULL);
     assert(levelDesc[0] != NULL);
     assert(levelDesc[0][0] != '\0');
@@ -2894,6 +2351,8 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
         assert(desc.length() == (rowNo + 1) * numColumns);
     }
     assert(desc.length() == numRows * numColumns);
+    
+    cout << "Level description: " << desc << endl;
 
     theCurrentLevel.setTextDescription(desc);  // save in case need to resend to client
 
