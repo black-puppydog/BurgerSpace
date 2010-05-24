@@ -1,2 +1,13 @@
 /config.guess
 /config.sub
+
+src/*~
+src/*.o
+src/burgerspace
+src/burgerspace-server
+*/*Makefile.in
+*.gch
+src/.libs
+src/.deps
+src/*.lo
+*autom4te.cache*
