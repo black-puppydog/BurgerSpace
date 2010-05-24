@@ -296,6 +296,7 @@ protected:
                         const flatzebra::Sprite &s) const;
     void loadLevel(int levelNo) throw(std::string);
     void loadLevelDescription(int);
+    void initLevelSet();
     void displayErrorMessage(const std::string &msg) throw();
     void initializeSprites() throw(flatzebra::PixmapLoadError);
     void initializeMisc() throw(std::string);

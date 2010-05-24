@@ -440,11 +440,33 @@ int SimpleLevelSetImplementation::getNumLevels()
 
 LevelDescription * SimpleLevelSetImplementation::getLevelDescription(int levelNumber)
 {
+	cout << "loading level description of level no. " << levelNumber << endl;
 	LevelDescription * l = new LevelDescription;
 	l->LineStrings = levelDescriptorTable[levelNumber];
 	l->enemyStartingHeights = enemyStartingHeights[levelNumber];
 	l->playerStartingPosition=playerStartingPos[levelNumber];
 	l->tableOfIngredients=tableOfTablesOfIngredientsLevel[levelNumber];
+	cout << "loading of level description successful" << endl;
 	return l;
+}
+
+
+SimpleLevelSetImplementation::SimpleLevelSetImplementation()
+{
+}
+
+
+SimpleLevelSetImplementation::~SimpleLevelSetImplementation()
+{
+}
+
+LevelSet::LevelSet()
+{
+
+}
+
+LevelSet::~LevelSet()
+{
+
 }
 #endif

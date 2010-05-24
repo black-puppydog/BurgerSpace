@@ -241,6 +241,8 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
     assert(initLevelNumber >= 1);
     initLevelNo = initLevelNumber;
     cumulLevelNo = initLevelNo;
+
+    initLevelSet();
     initNextLevel(cumulLevelNo);
 
     desiredDirs[RIGHT] =
@@ -248,6 +250,11 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
     desiredDirs[LEFT] =
     desiredDirs[DOWN] = false;
     chefWantsToShootPepper = false;
+}
+
+void BurgerSpaceServer::initLevelSet()
+{
+		levelSet = new SimpleLevelSetImplementation();
 }
 
 
@@ -2271,8 +2278,9 @@ void
 BurgerSpaceServer::loadLevelDescription(int levelNumber)
 /* loads all data needed to initialize a level */
 {
-	cout << "loading level description of level no. " << levelNumber << endl;
+//	cout << "loading level description of level no. " << levelNumber << endl;
 	theCurrentLevelDescription = levelSet->getLevelDescription(levelNumber);
+//	cout << "loading of level description successful" << endl;
 }
 
 
@@ -2354,9 +2362,13 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
     
     cout << "Level description: " << desc << endl;
 
+    cout << "setting textDescription...";
     theCurrentLevel.setTextDescription(desc);  // save in case need to resend to client
+    cout << "done." << endl;
 
+    cout << "updating level...";
     updateLevel(levelNo, numColumns, numRows, levelPos, desc);  // virtual
+    cout << "done." << endl;
 }
 
 

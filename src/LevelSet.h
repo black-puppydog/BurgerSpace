@@ -22,13 +22,18 @@ struct LevelDescription
 class LevelSet
 {
   public:
+
     virtual int getNumLevels()=0;
 
     virtual LevelDescription * getLevelDescription(int levelNumber)=0;
+
+  protected:
+    LevelSet();
+    ~LevelSet();
 };
 	
 	
-class SimpleLevelSetImplementation : LevelSet
+class SimpleLevelSetImplementation : public LevelSet
 {
   public:
 
