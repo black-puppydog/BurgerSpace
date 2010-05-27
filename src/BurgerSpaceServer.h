@@ -180,7 +180,7 @@ protected:
 
 
     LevelSet * levelSet;
-    LevelDescription * theCurrentLevelDescription;
+    LevelDescription theCurrentLevelDescription;
 
     enum RequestType { NO_REQUEST, START_GAME_REQUEST, PAUSE_REQUEST, RESUME_REQUEST };
 
