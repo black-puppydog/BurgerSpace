@@ -42,6 +42,7 @@
 
 #include "LevelSet.h"
 #include "Helpers.h"
+#include "ParsedLevelSet.h"
 
 using namespace std;
 using namespace flatzebra;
@@ -254,7 +255,12 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
 
 void BurgerSpaceServer::initLevelSet()
 {
+    try{
+        levelSet=new ParsedLevelSet();
+    } catch(...)
+    {
 		levelSet = new SimpleLevelSetImplementation();
+    }
 }
 
 

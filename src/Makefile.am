@@ -60,6 +60,8 @@ libcore_la_SOURCES = \
 	Level.cpp \
 	LevelSet.cpp \
 	LevelSet.h \
+	ParsedLevelSet.cpp \
+	ParsedLevelSet.h \
 	Helpers.h
 
 libcore_la_LIBADD = \
