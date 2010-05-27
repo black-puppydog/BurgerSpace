@@ -480,8 +480,8 @@ LevelSet::~LevelSet()
 
 LevelDescription LevelSet::getLevelDescription(int levelNumber)
 {
-    assert(levelNumber>=0);
-    assert(levelNumber<levelDescriptions->size());
+    assert(levelNumber>0);
+    assert(levelNumber<=levelDescriptions->size());
     LevelDescription result = levelDescriptions->at(levelNumber-1); // vector's numbering starts at zero
     return result;
 }
