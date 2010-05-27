@@ -145,7 +145,7 @@ SimpleLevelSetImplementation::levelDescriptor6[] =
     "eeeeeeetftfteletffffeee",
     "eeefffffelefftfteeeeeee",
     "eeeeeeetfffteletffffeee",
-    "eeefffffeeefffffeeeeeee",
+    "eeefffffeeelffffeeeeeee",
     "eeeeeeeeeeeeeeeeeeeeeee",
     "eeeeeeeeeeeeeeeeeeeeeee",
     "eeeepppepppepppepppeeee",
@@ -164,11 +164,7 @@ SimpleLevelSetImplementation::levelDescriptorTable[] =
     levelDescriptor3,
     levelDescriptor4,
     levelDescriptor5,
-    levelDescriptor6,
-    0,  // safety padding
-    0,  // safety padding
-    0,  // safety padding
-    0,  // safety padding
+    levelDescriptor6
 };
 
 
@@ -385,11 +381,7 @@ SimpleLevelSetImplementation::tableOfTablesOfIngredientsLevel[] =
     tableIngredientsLevel3,
     tableIngredientsLevel4,
     tableIngredientsLevel5,
-    tableIngredientsLevel6,
-    NULL,  // safety padding
-    NULL,  // safety padding
-    NULL,  // safety padding
-    NULL,  // safety padding
+    tableIngredientsLevel6
 };
 
 
@@ -409,10 +401,6 @@ SimpleLevelSetImplementation::enemyStartingHeights[] =
     {  2,  9,  2,  9 },  // level 4
     {  2, 13,  2, 13 },  // level 5
     {  3, 11,  2, 10 },  // level 6
-    {  0,  0,  0,  0 },  // safety padding
-    {  0,  0,  0,  0 },  // safety padding
-    {  0,  0,  0,  0 },  // safety padding
-    {  0,  0,  0,  0 },  // safety padding
 };
 
 
@@ -456,14 +444,14 @@ SimpleLevelSetImplementation::initializeLevelDescriptions()
             j++;
         }
 
-        cout << "loaded level no. " << levelNumber << endl;
-        cout << "Description lines:" << endl;
-        for(int i=0;i<l->LineStrings.size();i++)
-        {
-            cout << l->LineStrings.at(i) << endl;
-        }
-        cout << endl << "Enemy starting heights: " << l->enemyStartingHeights.first << ", " << l->enemyStartingHeights.second << ", "  << l->enemyStartingHeights.third << ", "  << l->enemyStartingHeights.fourth << endl;
-        cout << "player starting position: " << l->playerStartingPosition.first << ", " << l->playerStartingPosition.second << endl;
+//        cout << "loaded level no. " << levelNumber << endl;
+//        cout << "Description lines:" << endl;
+//        for(int i=0;i<l->LineStrings.size();i++)
+//        {
+//            cout << l->LineStrings.at(i) << endl;
+//        }
+//        cout << endl << "Enemy starting heights: " << l->enemyStartingHeights.first << ", " << l->enemyStartingHeights.second << ", "  << l->enemyStartingHeights.third << ", "  << l->enemyStartingHeights.fourth << endl;
+//        cout << "player starting position: " << l->playerStartingPosition.first << ", " << l->playerStartingPosition.second << endl;
         result->push_back(*l);
     }
     cout << "loading of level descriptions successful" << endl;
@@ -483,7 +471,6 @@ SimpleLevelSetImplementation::~SimpleLevelSetImplementation()
 
 LevelSet::LevelSet()
 {
-    // nothing to do here
 }
 
 LevelSet::~LevelSet()
@@ -495,7 +482,7 @@ LevelDescription LevelSet::getLevelDescription(int levelNumber)
 {
     assert(levelNumber>=0);
     assert(levelNumber<levelDescriptions->size());
-    LevelDescription result = levelDescriptions->at(levelNumber);
+    LevelDescription result = levelDescriptions->at(levelNumber-1); // vector's numbering starts at zero
     return result;
 }
 

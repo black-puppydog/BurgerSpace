@@ -632,7 +632,6 @@ BurgerSpaceServer::initNextLevel(int levelNo /*= 0*/) throw(int)
             cumulLevelNo++;
         else
             cumulLevelNo = levelNo;
-        loadLevelDescription(cumulLevelNo);
         loadLevel(cumulLevelNo);
         initializeSprites();
         initTimeForTreat();
@@ -2274,16 +2273,6 @@ BurgerSpaceServer::loadPixmaps() throw(PixmapLoadError)
     loadPixmap(digit9_xpm, digitPA, 9);
 }
 
-void 
-BurgerSpaceServer::loadLevelDescription(int levelNumber)
-/* loads all data needed to initialize a level */
-{
-//	cout << "loading level description of level no. " << levelNumber << endl;
-	theCurrentLevelDescription = levelSet->getLevelDescription(levelNumber);
-//	cout << "loading of level description successful" << endl;
-}
-
-
 void
 BurgerSpaceServer::loadLevel(int levelNo) throw(string)
 /*  Affects the data member 'theCurrentLevel', which must already be
@@ -2293,14 +2282,11 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
     Throws an error message string if an error occurs.
 */
 {
-    cout << "BurgerSpaceServer::loadLevel(" << levelNo << ")" << endl;
 
-    loadLevelDescription(levelNo);
     levelNo = (levelNo - 1) % levelSet->getNumLevels() + 1;
+    theCurrentLevelDescription = levelSet->getLevelDescription(levelNo);
 
     vector<string> levelDesc = theCurrentLevelDescription.LineStrings;
-//    assert(levelDesc != NULL);
-//    assert(levelDesc->front() != NULL);
     assert(levelDesc[0].size()!=0);
 
     // Count the number of rows and columns:
@@ -2362,16 +2348,10 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
         assert(desc.length() == (rowNo + 1) * numColumns);
     }
     assert(desc.length() == numRows * numColumns);
-    
-    cout << "Level description: " << desc << endl;
 
-    cout << "setting textDescription..." << endl;
     theCurrentLevel.setTextDescription(desc);  // save in case need to resend to client
-    cout << "done." << endl;
 
-    cout << "updating level..." << endl;
     updateLevel(levelNo, numColumns, numRows, levelPos, desc);  // virtual
-    cout << "done." << endl;
 }
 
 

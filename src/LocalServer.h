@@ -38,7 +38,6 @@ public:
     }
     virtual void updateLevel(int levelNo, size_t numColumns, size_t numRows, flatzebra::Couple levelPos, const std::string &desc)
     {
-        cout << "entered updateLevelmethod." << endl;
         client.handleLevelUpdate(levelNo, numColumns, numRows, levelPos, desc);
     }
     virtual void updateSprite(uint32_t id, BurgerSpaceServer::SpriteType type, flatzebra::Couple pos, size_t pixmapIndex)
