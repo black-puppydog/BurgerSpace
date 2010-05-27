@@ -32,8 +32,11 @@ vector<LevelDescription> * ParsedLevelSet::parseLevels()
 
     while(getline(inFile, line))
     {
+        line=line.substr(0, line.find('#'));
         trim(line);
-        if(line.size()==0 || line.at(0)=='#')
+
+        // check if this line is relevant
+        if(line.size()==0)
             continue;
 
         // check if this line starts a new level description:
@@ -188,8 +191,7 @@ int ParsedLevelSet::parseInt(string s)
 
 // trim from both ends
 void ParsedLevelSet::trim(std::string &s) {
-    remove_if(s.begin(), s.end(), ::isspace);
-
+    s.erase(std::remove_if(s.begin(), s.end(), ::isspace), s.end());
 }
 
 // trim from start
