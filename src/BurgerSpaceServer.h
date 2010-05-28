@@ -180,7 +180,7 @@ protected:
 
 
     LevelSet * levelSet;
-    LevelDescription * theCurrentLevelDescription;
+    LevelDescription theCurrentLevelDescription;
 
     enum RequestType { NO_REQUEST, START_GAME_REQUEST, PAUSE_REQUEST, RESUME_REQUEST };
 
@@ -295,7 +295,6 @@ protected:
                         const flatzebra::Couple groupPos, const flatzebra::Couple groupSize,
                         const flatzebra::Sprite &s) const;
     void loadLevel(int levelNo) throw(std::string);
-    void loadLevelDescription(int);
     void initLevelSet();
     void displayErrorMessage(const std::string &msg) throw();
     void initializeSprites() throw(flatzebra::PixmapLoadError);

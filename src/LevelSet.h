@@ -5,31 +5,33 @@
 #include "Helpers.h"
 #include "Level.h"
 
+#include <vector>
+#include <string>
+
 using namespace std;
 
 struct LevelDescription
 {
   public:
-	const char ** LineStrings;
-
+        vector<string> LineStrings;
 	IngInit * tableOfIngredients;
-
 	IntQuad enemyStartingHeights;
-
 	IntPair playerStartingPosition;
 };
 
 class LevelSet
 {
   public:
-
-    virtual int getNumLevels()=0;
-
-    virtual LevelDescription * getLevelDescription(int levelNumber)=0;
+    int getNumLevels();
+    LevelDescription getLevelDescription(int levelNumber);
 
   protected:
     LevelSet();
     ~LevelSet();
+    void setLevelDescriptions(vector<LevelDescription> * l);
+
+  private:
+    vector<LevelDescription> * levelDescriptions;
 };
 	
 	
@@ -40,8 +42,8 @@ class SimpleLevelSetImplementation : public LevelSet
 	SimpleLevelSetImplementation();
 	~SimpleLevelSetImplementation();
 
-	LevelDescription * getLevelDescription(int levelNumber);
-	int getNumLevels();
+//	LevelDescription * getLevelDescription(int levelNumber);
+//	int getNumLevels();
 
   private:
 
@@ -66,6 +68,10 @@ class SimpleLevelSetImplementation : public LevelSet
         tableIngredientsLevel4[],
         tableIngredientsLevel5[],
         tableIngredientsLevel6[];
+
+    protected:
+        vector<LevelDescription> * initializeLevelDescriptions();
+
 };
 
 

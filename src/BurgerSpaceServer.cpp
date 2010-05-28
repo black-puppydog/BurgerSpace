@@ -42,6 +42,7 @@
 
 #include "LevelSet.h"
 #include "Helpers.h"
+#include "ParsedLevelSet.h"
 
 using namespace std;
 using namespace flatzebra;
@@ -243,7 +244,7 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
     cumulLevelNo = initLevelNo;
 
     initLevelSet();
-    initNextLevel(cumulLevelNo);
+//    initNextLevel(cumulLevelNo);
 
     desiredDirs[RIGHT] =
     desiredDirs[UP] =
@@ -254,7 +255,12 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
 
 void BurgerSpaceServer::initLevelSet()
 {
+    try{
+        levelSet=new ParsedLevelSet();
+    } catch(...)
+    {
 		levelSet = new SimpleLevelSetImplementation();
+    }
 }
 
 
@@ -326,9 +332,9 @@ BurgerSpaceServer::initializeSprites() throw(PixmapLoadError)
     deleteSprite(playerSprite);
     Couple playerSize = playerPA.getImageSize();
     assert(playerSize.isNonZero());
-    int sx = theCurrentLevelDescription->playerStartingPosition.first;
+    int sx = theCurrentLevelDescription.playerStartingPosition.first;
     assert(sx != 0);
-    int sy = theCurrentLevelDescription->playerStartingPosition.second;
+    int sy = theCurrentLevelDescription.playerStartingPosition.second;
     assert(sy != 0);
     initPlayerPos = theCurrentLevel.positionInPixels +
                 Couple(sx * TILE_SIDE + 1, sy * TILE_SIDE - playerSize.y);
@@ -347,7 +353,7 @@ BurgerSpaceServer::initializeSprites() throw(PixmapLoadError)
 
     const Couple size = bottomBunPA.getImageSize();
     IngInit *tableIngredients =
-    		theCurrentLevelDescription->tableOfIngredients;
+                theCurrentLevelDescription.tableOfIngredients;
     assert(tableIngredients != NULL);
 
     numHamburgersToDo = 0;
@@ -632,7 +638,6 @@ BurgerSpaceServer::initNextLevel(int levelNo /*= 0*/) throw(int)
             cumulLevelNo++;
         else
             cumulLevelNo = levelNo;
-        loadLevelDescription(cumulLevelNo);
         loadLevel(cumulLevelNo);
         initializeSprites();
         initTimeForTreat();
@@ -1205,7 +1210,7 @@ BurgerSpaceServer::animateAutomaticCharacters()
         timeForNewEnemy = 0;
 
         assert(theCurrentLevel.getLevelNo() >= 1);
-        IntQuad sh = theCurrentLevelDescription->enemyStartingHeights;
+        IntQuad sh = theCurrentLevelDescription.enemyStartingHeights;
         assert(sh.first != 0 && sh.second != 0 &&
                     sh.third != 0 && sh.fourth != 0);
 
@@ -2274,16 +2279,6 @@ BurgerSpaceServer::loadPixmaps() throw(PixmapLoadError)
     loadPixmap(digit9_xpm, digitPA, 9);
 }
 
-void 
-BurgerSpaceServer::loadLevelDescription(int levelNumber)
-/* loads all data needed to initialize a level */
-{
-//	cout << "loading level description of level no. " << levelNumber << endl;
-	theCurrentLevelDescription = levelSet->getLevelDescription(levelNumber);
-//	cout << "loading of level description successful" << endl;
-}
-
-
 void
 BurgerSpaceServer::loadLevel(int levelNo) throw(string)
 /*  Affects the data member 'theCurrentLevel', which must already be
@@ -2293,21 +2288,19 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
     Throws an error message string if an error occurs.
 */
 {
-    //cout << "BurgerSpaceServer::loadLevel(" << levelNo << ")" << endl;
 
     levelNo = (levelNo - 1) % levelSet->getNumLevels() + 1;
+    theCurrentLevelDescription = levelSet->getLevelDescription(levelNo);
 
-    const char ** levelDesc = theCurrentLevelDescription->LineStrings;
-    assert(levelDesc != NULL);
-    assert(levelDesc[0] != NULL);
-    assert(levelDesc[0][0] != '\0');
+    vector<string> levelDesc = theCurrentLevelDescription.LineStrings;
+    assert(levelDesc[0].size()!=0);
 
     // Count the number of rows and columns:
     size_t numRows = 0, numColumns = 0;
     size_t rowNo;
-    for (rowNo = 0; levelDesc[rowNo] != NULL; rowNo++)
+    for (rowNo = 0; rowNo<levelDesc.size(); rowNo++)
     {
-        size_t thisRowsLength = strlen(levelDesc[rowNo]);
+        size_t thisRowsLength = levelDesc[rowNo].size();
         if (thisRowsLength == 0)
             throw __("Row # ") + itoa(rowNo) + __(" is empty");
         if (numColumns == 0)
@@ -2333,12 +2326,14 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
     string desc;
     desc.reserve(numRows * numColumns);
 
-    for (rowNo = 0; levelDesc[rowNo] != NULL; rowNo++)
+    for (rowNo = 0; rowNo<levelDesc.size(); rowNo++)
     {
+
         for (size_t colNo = 0; levelDesc[rowNo][colNo] != '\0'; colNo++)
         {
             const char **xpm = NULL;
-            switch (levelDesc[rowNo][colNo])
+            char c=levelDesc[rowNo][colNo];
+            switch (c)
             {
                 case 'e':  xpm = empty_xpm;  break;
                 case 'f':  xpm = floor_xpm;  break;
@@ -2359,16 +2354,10 @@ BurgerSpaceServer::loadLevel(int levelNo) throw(string)
         assert(desc.length() == (rowNo + 1) * numColumns);
     }
     assert(desc.length() == numRows * numColumns);
-    
-    cout << "Level description: " << desc << endl;
 
-    cout << "setting textDescription...";
     theCurrentLevel.setTextDescription(desc);  // save in case need to resend to client
-    cout << "done." << endl;
 
-    cout << "updating level...";
     updateLevel(levelNo, numColumns, numRows, levelPos, desc);  // virtual
-    cout << "done." << endl;
 }
 
 
