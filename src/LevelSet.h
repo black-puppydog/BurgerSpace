@@ -14,7 +14,7 @@ struct LevelDescription
 {
   public:
         vector<string> LineStrings;
-	IngInit * tableOfIngredients;
+	vector<IngInit> tableOfIngredients;
 	IntQuad enemyStartingHeights;
 	IntPair playerStartingPosition;
 };

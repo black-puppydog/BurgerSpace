@@ -432,7 +432,13 @@ SimpleLevelSetImplementation::initializeLevelDescriptions()
         LevelDescription * l = new LevelDescription;
         l->enemyStartingHeights = enemyStartingHeights[levelNumber];
         l->playerStartingPosition=playerStartingPos[levelNumber];
-        l->tableOfIngredients=tableOfTablesOfIngredientsLevel[levelNumber];
+	
+	
+        l->tableOfIngredients=vector<IngInit>();
+	for(size_t j = 0; tableOfTablesOfIngredientsLevel[levelNumber][j].rank!=NULL; j++)
+	{
+	  l->tableOfIngredients.push_back(tableOfTablesOfIngredientsLevel[levelNumber][j]);
+	}
 
         // construct strings
         l->LineStrings = * new vector<string>();
@@ -454,7 +460,6 @@ SimpleLevelSetImplementation::initializeLevelDescriptions()
 //        cout << "player starting position: " << l->playerStartingPosition.first << ", " << l->playerStartingPosition.second << endl;
         result->push_back(*l);
     }
-    cout << "loading of level descriptions successful" << endl;
     return result;
 }
 

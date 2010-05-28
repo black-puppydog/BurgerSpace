@@ -255,12 +255,14 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
 
 void BurgerSpaceServer::initLevelSet()
 {
-    try{
+//     try{
         levelSet=new ParsedLevelSet();
-    } catch(...)
-    {
-		levelSet = new SimpleLevelSetImplementation();
-    }
+// 	cout << "loading of level descriptions successful" << endl;
+//     } catch(...)
+//     {
+// 	cout << "loading of level file failed, falling back to standard levelset." << endl;
+// 	levelSet = new SimpleLevelSetImplementation();
+//     }
 }
 
 
@@ -352,18 +354,19 @@ BurgerSpaceServer::initializeSprites() throw(PixmapLoadError)
     ingredientGroups.clear();
 
     const Couple size = bottomBunPA.getImageSize();
-    IngInit *tableIngredients =
+    vector<IngInit> tableIngredients =
                 theCurrentLevelDescription.tableOfIngredients;
-    assert(tableIngredients != NULL);
+//     assert(tableIngredients != NULL);
 
     numHamburgersToDo = 0;
 
-    for (size_t j = 0; tableIngredients[j].rank != 0; j++)
+    for (size_t j = 0; j<tableIngredients.size(); j++)
     {
         const IngInit &ii = tableIngredients[j];
         int yTarget = theCurrentLevel.positionInPixels.y +
                                 ii.yTargetTile * TILE_SIDE - size.y * ii.rank;
         PixmapArray *pm = NULL;
+// 	cout << "adding ingredient: " << ii.type << endl;
         switch (ii.type)
         {
             case IngInit::BOTTOM_BUN:   pm = &bottomBunPA;   break;
