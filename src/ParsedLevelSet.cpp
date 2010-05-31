@@ -24,14 +24,13 @@ vector<LevelDescription> * ParsedLevelSet::parseLevels()
         /* parses the level descriptions from a yaml-like file */
 {
     vector<vector<string> * > * levelStrings = new vector<vector<string> *>();
+    cout << "using level set from " << levelFile << "." << endl;
 
-//     cout << "using levelset from " << levelFile << "." << endl;
     ifstream inFile(levelFile.c_str());
     string line;
 
-    vector<string> * levelString; // = vector<string>();
-//     levelStrings->push_back(levelString);
-    
+    vector<string> * levelString; 
+   
     int ln=1;
     while(getline(inFile, line))
     {
@@ -46,7 +45,6 @@ vector<LevelDescription> * ParsedLevelSet::parseLevels()
         // check if this line starts a new level description:
         if(starts_with(line, lineString))
         {
-// 	    cout << "found level no. " << ln << endl;
 	    ln++;
 
             // replace the old levelstring with a new one
@@ -61,16 +59,6 @@ vector<LevelDescription> * ParsedLevelSet::parseLevels()
     }
     inFile.close();
     
-//     cout << "read " << levelStrings->size() << " levels." << endl << endl;
-//     for(int i=0; i<levelStrings->size(); i++)
-//     {
-//         vector<string> * lstring = levelStrings->at(i);
-// 	for(int j=0; j<lstring->size(); j++)
-// 	{
-// 	  cout << lstring->at(j) << endl;
-// 	}
-//     }
-
     vector<LevelDescription> * levelDescs = new vector<LevelDescription>();
     // now we need to make every levelstring into a levelDescription
     for(int i=0; i<levelStrings->size(); i++)
@@ -78,33 +66,6 @@ vector<LevelDescription> * ParsedLevelSet::parseLevels()
         LevelDescription * l = parseSingleLevel(levelStrings->at(i));
 
 
-//         cout << "loaded level no. " << i+1 << endl;
-//         cout << "Description lines:" << endl;
-//         for(int j=0;j<l->LineStrings.size();j++)
-//         {
-//             cout << l->LineStrings.at(j) << endl;
-//         }
-//         cout << endl;
-//         cout << endl << "Enemy starting heights: " << l->enemyStartingHeights.first << ", " << l->enemyStartingHeights.second << ", "  << l->enemyStartingHeights.third << ", "  << l->enemyStartingHeights.fourth << endl;
-//         cout << "player starting position: " << l->playerStartingPosition.first << ", " << l->playerStartingPosition.second << endl;
-// 	cout << "Ingredients:" << endl;
-//         for(int j=0;j<l->tableOfIngredients.size();j++)
-//         {
-// 	  IngInit init = l->tableOfIngredients.at(j);
-// 	  string tstring;
-// 	  switch (init.type)
-// 	  {
-// 	      case IngInit::BOTTOM_BUN:   tstring="bottom_bun";   break;
-// 	      case IngInit::MEAT:         tstring="meat";        break;
-// 	      case IngInit::LETTUCE:      tstring="lettuce";     break;
-// 	      case IngInit::RED_STUFF:    tstring="red_stuff";    break;
-// 	      case IngInit::YELLOW_STUFF: tstring="yellow_stuff"; break;
-// 	      case IngInit::TOP_BUN:  	  tstring="top_bun"; 	break;
-// 	      default:                   tstring="unknown";
-// 	  }
-// 	  cout << "[" << init.xInitTile << ", " << init.yInitTile << ", " << init.yTargetTile << ", " << init.rank << ", " << tstring << "]" << endl;
-//         }
-	
 	levelDescs->push_back(*l);
 	
     }
@@ -207,7 +168,6 @@ IngInit ParsedLevelSet::parseSingleIngredient(string ingString)
 
 IngInit::IngType ParsedLevelSet::parseIngredientType(string ingString)
 {
-//   cout << "parsing type of " << ingString << endl;
   if(ingString==string("BOTTOM_BUN"))
     return IngInit::BOTTOM_BUN;
   if(ingString==string("MEAT"))
@@ -248,8 +208,6 @@ IntQuad ParsedLevelSet::parseEnemyStartingHeights(string enemyStartPosLine)
     assert(starts_with(enemyStartPosLine, eStartString));
 
     string posArray = enemyStartPosLine.substr(eStartString.size());
-
-    cout << "posarray: " << posArray << endl;
     assert(posArray.size()>=9); // minimum size is 9: [w,x,y,z]
     assert(posArray.at(0)=='[');
     assert(posArray.at(posArray.size()-1)==']');
