@@ -60,6 +60,7 @@ static struct option knownOptions[] =
     { "version",       no_argument,       NULL, 'v' },
     { "initial-level", required_argument, NULL, 'i' },
     { "port",          required_argument, NULL, 'p' },
+    { "levelset",      required_argument, NULL, 'l' },
 
     { NULL, 0, NULL, 0 }  // marks the end
 };
@@ -298,8 +299,8 @@ class BurgerSpaceCommandLineServer : public BurgerSpaceServer
 {
 public:
 
-    BurgerSpaceCommandLineServer(int _initLevelNumber, int _sock, Uint32 _minMSBetweenWrites) throw(int, std::string)
-      : BurgerSpaceServer(_initLevelNumber, false),
+    BurgerSpaceCommandLineServer(int _initLevelNumber, int _sock, Uint32 _minMSBetweenWrites, string levelfile) throw(int, std::string)
+      : BurgerSpaceServer(_initLevelNumber, false, levelfile),
         sock(_sock),
         minMSBetweenWrites(_minMSBetweenWrites),
         pendingLevelUpdatePacket(),
@@ -774,6 +775,7 @@ main(int argc, char *argv[])
     int initLevelNo = 1;
     unsigned short port = DEFAULT_UDP_SERVER_PORT;
     Uint32 minMSBetweenWrites = 25;
+    string levelFile = getDir(PKGLEVELDIR, "PKGLEVELDIR")+"levelset.yaml";
 
 
 
@@ -817,6 +819,10 @@ main(int argc, char *argv[])
                     }
                     port = static_cast<unsigned short>(n);
                 }
+                break;
+
+            case 'l':
+		levelFile = optarg;
                 break;
 
             case 'v':
@@ -874,7 +880,7 @@ main(int argc, char *argv[])
 
         /*  Create the "game logic" object.
         */
-        BurgerSpaceCommandLineServer theBurgerSpaceServer(initLevelNo, sock, minMSBetweenWrites);
+        BurgerSpaceCommandLineServer theBurgerSpaceServer(initLevelNo, sock, minMSBetweenWrites, levelFile);
         theBurgerSpaceServer.finishInit();  // calls virtual functions
 
 

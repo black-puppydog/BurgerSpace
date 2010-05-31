@@ -30,8 +30,8 @@
 class LocalServer : public BurgerSpaceServer
 {
 public:
-    LocalServer(BurgerSpaceClient &_client, int initLevelNo, bool oldMotionMode)
-    :   BurgerSpaceServer(initLevelNo, oldMotionMode),
+    LocalServer(BurgerSpaceClient &_client, int initLevelNo, bool oldMotionMode, std::string levelfile)
+    :   BurgerSpaceServer(initLevelNo, oldMotionMode, levelfile),
         client(_client)
     {
         // NOTE: finishInit() must be called on this object, outside of a constructor

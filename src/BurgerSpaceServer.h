@@ -9,7 +9,7 @@
     as published by the Free Software Foundation; either version 2
     of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
+    This program is distributed in the hope that it wil/usr/local/share/sounds/burgerspacel be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -73,7 +73,7 @@ class BurgerSpaceServer : public BurgerSpaceServerInterface
 {
 public:
 
-    BurgerSpaceServer(int initLevelNumber, bool _oldMotionMode) throw(int, std::string);
+    BurgerSpaceServer(int initLevelNumber, bool _oldMotionMode, std::string levelfile) throw(int, std::string);
 
     void finishInit();  // must be called after constructor -- calls virtual functions
 
@@ -177,6 +177,7 @@ protected:
 
     int initLevelNo;  // level number at which play starts
     int cumulLevelNo;
+    std::string levelFile;
 
 
     LevelSet * levelSet;

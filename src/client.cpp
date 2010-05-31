@@ -63,6 +63,7 @@ static struct option knownOptions[] =
     { "port",          required_argument, NULL, 'p' },
     { "chef",          no_argument,       NULL, 'c' },
     { "enemy",         no_argument,       NULL, 'e' },
+    { "levelset",      required_argument, NULL, 'l' },
 
     { NULL, 0, NULL, 0 }  // marks the end
 };
@@ -162,6 +163,7 @@ main(int argc, char *argv[])
     string serverHostname;  // UDP server hostname if not empty; local server otherwise
     unsigned short port = DEFAULT_UDP_SERVER_PORT;
     Role role = ROLE_SPECTATOR;
+    string levelFile = getDir(PKGLEVELDIR, "PKGLEVELDIR")+"levelset.yaml";
 
 
     #ifdef HAVE_GETOPT_LONG
@@ -206,6 +208,10 @@ main(int argc, char *argv[])
 
                     millisecondsPerFrame = int(n);
                 }
+                break;
+
+            case 'l':
+		levelFile = optarg;
                 break;
 
             case 'n':
@@ -281,7 +287,7 @@ main(int argc, char *argv[])
         if (standAlone)
         {
             // Create a "local server":
-            LocalServer *ls = new LocalServer(theBurgerSpaceClient, initLevelNo, useOldMotionMode);
+            LocalServer *ls = new LocalServer(theBurgerSpaceClient, initLevelNo, useOldMotionMode, levelFile);
             ls->finishInit();
             serverInterface = ls;
         }

@@ -10,9 +10,12 @@
 class ParsedLevelSet: public LevelSet
 {
 public:
-    ParsedLevelSet();
+    ParsedLevelSet(std::string levelfile);
     ~ParsedLevelSet();
 private:
+    
+    std::string levelFile;
+    
     // main worker method
     vector<LevelDescription> * parseLevels();
 

@@ -184,7 +184,7 @@ getDirectionName(int d)
 
 
 BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
-                                    bool _oldMotionMode) throw(int, string)
+                                    bool _oldMotionMode, string levelfile) throw(int, string)
   : theScreenSizeInPixels(SCREEN_WIDTH_IN_PIXELS, SCREEN_HEIGHT_IN_PIXELS),
 
     initLevelNo(1),
@@ -242,6 +242,7 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
     assert(initLevelNumber >= 1);
     initLevelNo = initLevelNumber;
     cumulLevelNo = initLevelNo;
+    levelFile = levelfile;
 
     initLevelSet();
 //    initNextLevel(cumulLevelNo);
@@ -255,14 +256,16 @@ BurgerSpaceServer::BurgerSpaceServer(int initLevelNumber,
 
 void BurgerSpaceServer::initLevelSet()
 {
-//     try{
-        levelSet=new ParsedLevelSet();
-// 	cout << "loading of level descriptions successful" << endl;
-//     } catch(...)
-//     {
-// 	cout << "loading of level file failed, falling back to standard levelset." << endl;
-// 	levelSet = new SimpleLevelSetImplementation();
-//     }
+    try{
+        levelSet=new ParsedLevelSet(levelFile);
+	if(levelSet->getNumLevels() <= 0)
+	  throw "no levels found in file!";
+	cout << "loading of level descriptions successful" << endl;
+    } catch(...)
+    {
+	cout << "failed to load level file. falling back to standard levelset." << endl;
+	levelSet = new SimpleLevelSetImplementation();
+    }
 }
 
 

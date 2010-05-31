@@ -18,6 +18,7 @@ burgerspace_server_LDADD = \
 burgerspace_server_CXXFLAGS = \
 	-DPROGRAM=\"$(PACKAGE)-server\" \
 	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+	-DPKGLEVELDIR=\"$(pkgleveldir)\" \
 	-DDEFAULT_UDP_SERVER_PORT=$(DEFAULT_UDP_SERVER_PORT) \
 	-I$(top_srcdir)/src/images \
 	$(FLATZEBRA_CFLAGS)
@@ -41,6 +42,7 @@ burgerspace_LDADD = \
 burgerspace_CXXFLAGS = \
 	-DPROGRAM=\"$(PACKAGE)\" \
 	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+	-DPKGLEVELDIR=\"$(pkgleveldir)\" \
 	-DDEFAULT_UDP_SERVER_PORT=$(DEFAULT_UDP_SERVER_PORT) \
 	-I$(top_srcdir)/src/images \
 	$(FLATZEBRA_CFLAGS)
@@ -69,6 +71,7 @@ libcore_la_LIBADD = \
 
 libcore_la_CXXFLAGS = \
 	-DPKGSOUNDDIR=\"$(pkgsounddir)\" \
+	-DPKGLEVELDIR=\"$(pkgleveldir)\" \
 	-I$(top_srcdir)/src/images \
 	$(FLATZEBRA_CFLAGS)
 
@@ -208,6 +211,8 @@ XPM_IMAGES = \
 	images/digit9.xpm
 
 pkgsounddir = $(datadir)/sounds/$(PACKAGE)
+pkgleveldir = $(datadir)/games/$(PACKAGE)
+
 pkgsound_DATA = \
 	sounds/ingredient-bounces.wav \
 	sounds/ingredient-in-plate.wav \
@@ -223,6 +228,8 @@ pkgsound_DATA = \
 	sounds/chef-shoots-blanks.wav \
 	sounds/treat-appears.wav \
 	sounds/treat-disappears.wav
+
+pkglevel_DATA =	levelset.yaml
 
 EXTRA_DIST = \
 	$(PACKAGE).desktop \
